@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,18 +7,28 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="mx.edu.ittepic.poll_o.Inicio">
+    tools:context="mx.edu.ittepic.poll_o.Inicio"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:gravity="top">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/ivletras"
+        android:src="@drawable/letraspollo"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="40dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:background="@mipmap/ic_launcher"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="109dp"
-        android:layout_marginEnd="109dp"
-        android:layout_marginTop="168dp" />
+        android:id="@+id/ivlogo"
+        android:src="@drawable/logosinguino"
+        android:paddingLeft="40dp"
+        android:paddingTop="40dp"
+        android:paddingRight="40dp"
+        android:layout_marginBottom="200dp"
+        android:padding="40dp" />
 
-</RelativeLayout>
+</LinearLayout>
