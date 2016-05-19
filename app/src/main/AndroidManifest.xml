@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuPrincipal" />
-        <activity android:name=".MenuEncuesta"></activity>
+        <activity android:name=".MenuEncuesta"/>
+        <activity android:name=".Pantalla_Login"/>
     </application>
 
 </manifest>
