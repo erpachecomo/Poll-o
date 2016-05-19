@@ -17,8 +17,8 @@
         android:layout_height="174dp"
         android:id="@+id/Logo_Pa_Log"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/logopollo"
-        android:layout_weight="0.56" />
+        android:layout_weight="0.56"
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:layout_width="wrap_content"

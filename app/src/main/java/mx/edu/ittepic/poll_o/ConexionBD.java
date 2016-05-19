@@ -19,14 +19,15 @@ public class ConexionBD extends SQLiteOpenHelper{
         sql.execSQL("CREATE TABLE Encuesta (idencuesta INTEGER PRIMARY KEY ,compania VARCHAR(50),estado VARCHAR(15),fecha_expiracion DATE, cantidad INTEGER)");
 
         sql.execSQL("CREATE TABLE Empleado_Encuesta (fk_celular VARCHAR(10),fk_idencuesta INTEGER," +
-                "    FOREIGN KEY (fk_celular) REFERENCES Empleado (celular), FOREIGN KEY (fk_idencuesta) REFERENCES Encuesta (idencuesta)");
+                "    FOREIGN KEY (fk_celular) REFERENCES Empleado (celular), FOREIGN KEY (fk_idencuesta) REFERENCES Encuesta (idencuesta))");
 
-        sql.execSQL("CREATE TABLE Pregunta (idpregunta INTEGER PRIMARY KEY,fk_idencuesta INTEGER,pregunta VARCHAR(255),tipo VARCHAR(15), respuestas(1000)," +
-                "   FOREIGN KEY (fk_idencuesta) REFERENCES Encuesta (idencuesta)");
+        sql.execSQL("CREATE TABLE Pregunta (idpregunta INTEGER PRIMARY KEY,fk_idencuesta INTEGER,pregunta VARCHAR(255),tipo VARCHAR(15), respuestas VARCHAR(1000)," +
+                "   FOREIGN KEY (fk_idencuesta) REFERENCES Encuesta (idencuesta) )");
 
 
         sql.execSQL("CREATE TABLE Respuestas (idrespuesta VARCHAR(20),fk_idpregunta INTEGER,valor VARCHAR (10000)," +
-                "   FOREIGN KEY (fk_idpregunta) REFERENCES Pregunta (idpregunta)");
+                "   FOREIGN KEY (fk_idpregunta) REFERENCES Pregunta (idpregunta) )");
+
     }
 
     @Override

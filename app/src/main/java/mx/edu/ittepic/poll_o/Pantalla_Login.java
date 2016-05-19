@@ -41,13 +41,13 @@ public class Pantalla_Login extends AppCompatActivity {
 
                                String contraseñaReal=res.getString(4);
                                 if(Contrasena.equals(contraseñaReal)) {
-                                    Toast.makeText(Pantalla_Login.this, "Usuario Encontrado", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Pantalla_Login.this, "Inicio correcto", Toast.LENGTH_LONG).show();
                                 }
                                 else{
-                                    Toast.makeText(Pantalla_Login.this,"Usuario y/o contraseña no validos",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Pantalla_Login.this,"contraseña no validos",Toast.LENGTH_LONG).show();
                                 }
                             }else{
-                                Toast.makeText(Pantalla_Login.this,"Usuario y/o contraseña no validos",Toast.LENGTH_LONG).show();
+                                Toast.makeText(Pantalla_Login.this,"Usuario no validos",Toast.LENGTH_LONG).show();
                             }
                             base.close();
                         }catch (SQLiteException e){
@@ -66,9 +66,9 @@ public class Pantalla_Login extends AppCompatActivity {
         });
     }
     private boolean CamposVacios(String Usu,String Contra){
-        if(Usu.equals("") || Usu.equals("")){
+        if(Usu.equals("") || Contra.equals("")){
             return true;
         }
-        return true;
+        return false;
     }
 }
