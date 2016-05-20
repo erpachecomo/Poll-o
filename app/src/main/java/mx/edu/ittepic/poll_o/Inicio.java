@@ -39,7 +39,9 @@ public class Inicio extends AppCompatActivity {
             @Override
             public void onFinish() {
                 if(transparencia_letras>=1){
-                    startActivity(new Intent(Inicio.this,Pantalla_Login.class));
+                    Intent pantalla=new Intent(Inicio.this,Pantalla_Login.class);
+                    startActivity(pantalla);
+
                 }else{
                     timer.start();
                 }
