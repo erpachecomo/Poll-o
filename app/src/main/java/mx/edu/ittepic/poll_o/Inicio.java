@@ -24,8 +24,9 @@ import android.widget.ImageView;
 public class Inicio extends AppCompatActivity {
 
     Point tamanoPantalla;
-    Bitmap letras, logo;
+    Bitmap letras, logo,pollito;
     int alfa;
+    float progreso,tope,aumento;
     Lienzo lienzo;
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -39,7 +40,10 @@ public class Inicio extends AppCompatActivity {
         tamanoPantalla = new Point();
         Display display = getWindowManager().getDefaultDisplay();
         display.getSize(tamanoPantalla);
-
+        tope = 2*tamanoPantalla.x/3-100;
+        aumento=tope/400;
+        progreso=0;
+        pollito = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.pollito1),100,100,false);
         logo = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.logosinguino),tamanoPantalla.x / 3,tamanoPantalla.x / 3,false);
         Bitmap letraspollo=BitmapFactory.decodeResource(getResources(), R.drawable.letraspollo);
         letras = Bitmap.createScaledBitmap(letraspollo,letraspollo.getWidth() /3,letraspollo.getHeight()/3,false);
@@ -64,7 +68,16 @@ public class Inicio extends AppCompatActivity {
                 p.setAlpha(alfa);
                 c.drawBitmap(letras, tamanoPantalla.x / 2 - letras.getWidth() / 2, tamanoPantalla.y / 5, p);
                 p.setAlpha(255);
-                c.drawBitmap(logo,tamanoPantalla.x/2-logo.getWidth()/2,tamanoPantalla.y/4+letras.getHeight(),p);
+                c.drawBitmap(logo, tamanoPantalla.x / 2 - logo.getWidth() / 2, tamanoPantalla.y / 4 + letras.getHeight(), p);
+                Paint p2 = new Paint();
+                p2.setColor(Color.rgb(121, 179, 225));
+                p2.setStyle(Paint.Style.FILL);
+                c.drawCircle(tamanoPantalla.x / 6 + 50, tamanoPantalla.y / 4 + letras.getHeight() + logo.getHeight() + 20 + 50, 50, p2);
+
+
+                //c.drawCircle(tamanoPantalla.x/6+50+progreso,tamanoPantalla.y / 4 + letras.getHeight() + logo.getHeight() + 20+50,50,p2);
+                c.drawRect(tamanoPantalla.x / 6+50, tamanoPantalla.y / 4 + letras.getHeight() + logo.getHeight() + 20, tamanoPantalla.x / 6 + progreso+50, tamanoPantalla.y / 4 + letras.getHeight() + logo.getHeight()+120,p2);
+                c.drawBitmap(pollito,tamanoPantalla.x/6+progreso,tamanoPantalla.y / 4 + letras.getHeight() + logo.getHeight() + 20,p);
             }catch(Exception e){}
         }
 
@@ -99,12 +112,12 @@ public class Inicio extends AppCompatActivity {
             repetir=true;
             aumentoAlfa=true;
             puntero=ref;
-            sleep=50;
+            sleep=10;
         }
         public void run(){
             Canvas canvas=null;
             while(repetir){
-                if(sleep==1500){
+                if(sleep==1000){
                     repetir=false;
                 }
                 //Aquí 2do plano
@@ -112,13 +125,16 @@ public class Inicio extends AppCompatActivity {
                     try {
                         sleep(sleep);
                         if(aumentoAlfa){
-                            alfa+=5;
+                            alfa+=1;
+                            progreso+=aumento;
                         }else{
                             logo = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.logopollo), tamanoPantalla.x / 3, tamanoPantalla.x / 3, false);
-                            sleep=1500;
+                            sleep=1000;
                         }
                         if(alfa>=255){
-                            aumentoAlfa=false;
+                            if(progreso>=aumento*400){
+                                aumentoAlfa=false;
+                            }
                             alfa=255;
                         }
 
