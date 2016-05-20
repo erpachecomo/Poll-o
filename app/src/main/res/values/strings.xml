@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Poll-o</string>
+    <array name="itemsPrincipal">
+    <item>"Pedidos"</item>
+    <item>"Productos"</item>
+    <item>"Clientes"</item>
+    <item>"Detalle Pedido"</item>
+    <item>"Exportar Pedidos"</item>
+    <item>"Acerca de..."</item>
+    <item>"Salir"</item></array>
+
+
 </resources>
