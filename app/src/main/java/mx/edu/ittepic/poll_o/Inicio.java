@@ -5,8 +5,10 @@ import android.graphics.BitmapFactory;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class Inicio extends AppCompatActivity {
     ImageView letra, logo;
@@ -32,18 +34,20 @@ public class Inicio extends AppCompatActivity {
                     logo.setImageBitmap(BitmapFactory.decodeResource(Inicio.this.getResources(), R.drawable.logopollo));
                 }
                 if(transparencia_letras>=1){
-                    timer.cancel();
+                    timer.onFinish();
                 }
             }
 
             @Override
             public void onFinish() {
                 if(transparencia_letras>=1){
-                    Intent pantalla=new Intent(Inicio.this,Pantalla_Login.class);
+
+                    Intent pantalla= new Intent(Inicio.this,Pantalla_Login.class);
                     startActivity(pantalla);
 
                 }else{
                     timer.start();
+
                 }
             }
         };
