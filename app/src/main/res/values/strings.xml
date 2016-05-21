@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Poll-o</string>
+    <array name="menuEncuestas">
+        <item>Coca Cola</item>
+        <item>Walmart</item>
+    </array>
 </resources>

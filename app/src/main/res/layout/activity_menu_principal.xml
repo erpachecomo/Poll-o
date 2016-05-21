@@ -28,7 +28,8 @@
         android:layout_above="@+id/imag_butt_salir"
         android:layout_toRightOf="@+id/imag_butt_salir"
         android:layout_toEndOf="@+id/imag_butt_salir"
-        android:layout_marginBottom="61dp" />
+        android:layout_marginBottom="61dp"
+        android:onClick="Cambiar_Encuestas" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -37,7 +38,8 @@
         android:src="@drawable/acerca_de"
         android:layout_alignTop="@+id/imag_butt_Encuestas"
         android:layout_toLeftOf="@+id/imag_butt_salir"
-        android:layout_toStartOf="@+id/imag_butt_salir" />
+        android:layout_toStartOf="@+id/imag_butt_salir"
+        android:onClick="Cambiar_Acerca" />
 
     <TextView
         android:layout_width="wrap_content"
