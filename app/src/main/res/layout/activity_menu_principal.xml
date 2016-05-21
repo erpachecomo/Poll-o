@@ -13,27 +13,69 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
+        android:id="@+id/imag_butt_salir"
         android:src="@drawable/salir"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="135dp"
+        android:onClick="Cambiar_Salir" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton2"
+        android:id="@+id/imag_butt_Encuestas"
         android:src="@drawable/realizar_encuesta"
-        android:layout_above="@+id/imageButton"
-        android:layout_toRightOf="@+id/imageButton"
-        android:layout_toEndOf="@+id/imageButton"
+        android:layout_above="@+id/imag_butt_salir"
+        android:layout_toRightOf="@+id/imag_butt_salir"
+        android:layout_toEndOf="@+id/imag_butt_salir"
         android:layout_marginBottom="61dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton3"
+        android:id="@+id/imag_butt_Acerca"
         android:src="@drawable/acerca_de"
-        android:layout_alignTop="@+id/imageButton2"
-        android:layout_toLeftOf="@+id/imageButton"
-        android:layout_toStartOf="@+id/imageButton" />
+        android:layout_alignTop="@+id/imag_butt_Encuestas"
+        android:layout_toLeftOf="@+id/imag_butt_salir"
+        android:layout_toStartOf="@+id/imag_butt_salir" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Menu Principal"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Acerca de"
+        android:id="@+id/textView4"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/imag_butt_Acerca"
+        android:layout_alignEnd="@+id/imag_butt_Acerca" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Encuestas"
+        android:id="@+id/textView5"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/imag_butt_salir"
+        android:layout_toEndOf="@+id/imag_butt_salir" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Salir"
+        android:id="@+id/textView6"
+        android:layout_marginBottom="95dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
