@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
@@ -31,7 +30,9 @@
         <activity android:name=".MenuEncuesta" />
         <activity android:name=".Pantalla_Login" />
         <activity android:name=".AcercaDe" />
-        <activity android:name=".Encuestas"/>
+        <activity android:name=".Encuestas" />
+        <activity android:name=".Graficar" />
+        <activity android:name=".Preguntas"></activity>
     </application>
 
 </manifest>

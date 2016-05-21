@@ -7,34 +7,37 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="mx.edu.ittepic.poll_o.Encuestas"
-    android:orientation="vertical"
-    android:background="#c5d7f3">
+    tools:context="mx.edu.ittepic.poll_o.Graficar"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="ENCUESTAS"
-        android:id="@+id/textView7"
+        android:id="@+id/Encuesta_grafica"
         android:layout_gravity="center_horizontal" />
 
-    <SearchView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/searchView"
-        android:layout_gravity="right" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Preguntas disponibles para graficar:"
+        android:id="@+id/textView9" />
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView" >
+        android:layout_height="267dp"
+        android:id="@+id/scrollView2" >
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/encuestas_disponibles"
-            android:entries="@array/menuEncuestas"/>
+            android:layout_height="176dp"
+            android:id="@+id/listView" />
     </ScrollView>
 
+    <VideoView
+        android:layout_width="wrap_content"
+        android:layout_height="201dp"
+        android:id="@+id/Graficas"
+        android:layout_gravity="bottom" />
 </LinearLayout>

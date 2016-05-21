@@ -22,9 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Gráfica de Resultados  "
-        android:id="@+id/button"
+        android:id="@+id/Graficar_Resultados"
         android:layout_marginTop="40dp"
-        android:layout_below="@+id/button2"
+        android:layout_below="@+id/RealizarEncuesta"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Realizar Encuesta"
-        android:id="@+id/button2"
+        android:id="@+id/RealizarEncuesta"
         android:layout_below="@+id/imageView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
