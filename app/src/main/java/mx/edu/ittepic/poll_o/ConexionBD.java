@@ -58,5 +58,25 @@ public class ConexionBD extends SQLiteOpenHelper{
 
         return labels;
     }
+    public List<String> obtenerEncuestas(){
+        List<String> labels = new ArrayList<String>();
+
+        String selectQuery = "SELECT  * FROM Encuesta";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                labels.add(cursor.getString(0)+"_("+cursor.getString(1)+")");
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+
+        return labels;
+    }
 
 }
