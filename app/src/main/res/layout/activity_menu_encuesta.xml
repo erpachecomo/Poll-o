@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="mx.edu.ittepic.poll_o.MenuEncuesta">
+    tools:context="mx.edu.ittepic.poll_o.MenuEncuesta"
+    android:background="@drawable/background">
 
     <ImageView
         android:layout_width="wrap_content"

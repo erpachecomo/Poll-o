@@ -8,32 +8,39 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="mx.edu.ittepic.poll_o.MenuPrincipal"
-    android:background="#c5d7f3">
+    android:background="@drawable/background">
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
+        android:id="@+id/salir"
         android:src="@drawable/salir"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:background="#00ffffff"
+        android:layout_alignTop="@+id/realizar_encuesta"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="Cambiar_Salir" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton2"
+        android:id="@+id/realizar_encuesta"
         android:src="@drawable/realizar_encuesta"
-        android:layout_above="@+id/imageButton"
-        android:layout_toRightOf="@+id/imageButton"
-        android:layout_toEndOf="@+id/imageButton"
-        android:layout_marginBottom="61dp" />
+        android:background="#00ffffff"
+        android:onClick="Cambiar_Encuestas"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="123dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton3"
+        android:id="@+id/acerca_de"
         android:src="@drawable/acerca_de"
-        android:layout_alignTop="@+id/imageButton2"
-        android:layout_toLeftOf="@+id/imageButton"
-        android:layout_toStartOf="@+id/imageButton" />
+        android:background="#00b36a6a"
+        android:layout_below="@+id/salir"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp"
+        android:onClick="Cambiar_Acerca" />
 </RelativeLayout>

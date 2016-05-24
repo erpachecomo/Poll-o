@@ -10,7 +10,7 @@
     tools:context="mx.edu.ittepic.poll_o.Pantalla_Login"
     android:orientation="vertical"
     android:weightSum="1"
-    android:background="#c5d7f3">
+    android:background="@drawable/background">
 
     <ImageView
         android:layout_width="191dp"

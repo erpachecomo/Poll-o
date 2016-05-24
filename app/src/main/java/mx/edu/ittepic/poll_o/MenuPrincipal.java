@@ -12,9 +12,9 @@ public class MenuPrincipal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal);
-     //   Salir=(ImageButton)findViewById(R.id.imag_butt_salir);
-        //) Encuestas=(ImageButton)findViewById(R.id.imag_butt_Encuestas);
-        //AcercaDe=(ImageButton)findViewById(R.id.imag_butt_Acerca);
+        Salir=(ImageButton)findViewById(R.id.salir);
+        Encuestas=(ImageButton)findViewById(R.id.realizar_encuesta);
+        AcercaDe=(ImageButton)findViewById(R.id.acerca_de);
     }
     public void Cambiar_Salir(View v){
         //Yo creo que aqui debe mandar el mensaje de desconexion
