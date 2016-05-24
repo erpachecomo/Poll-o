@@ -2,6 +2,7 @@ package mx.edu.ittepic.poll_o;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -36,12 +37,15 @@ public class Pantalla_Login extends AppCompatActivity {
                             SQLiteDatabase base = conexion.getReadableDatabase();
                             String SQL="SELECT *FROM Empleado WHERE celular ='"+Usuario+"'";
                             Cursor res =base.rawQuery(SQL, null);
-                            if(res.moveToFirst()){
-                                //SI HAY RESULTADO
+                            if(!res.moveToFirst()){ //Aqui hay que quitarle el ! cuando ya este la aplicación.
 
-                               String contraseñaReal=res.getString(4);
+
+                               //String contraseñaReal=res.getString(4); Esta es la linea correcta cuando funcione
+                                String contraseñaReal=Contrasena;
                                 if(Contrasena.equals(contraseñaReal)) {
                                     Toast.makeText(Pantalla_Login.this, "Inicio correcto", Toast.LENGTH_LONG).show();
+                                    Intent MenuPrincipal= new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.MenuPrincipal.class);
+                                    startActivity(MenuPrincipal);
                                 }
                                 else{
                                     Toast.makeText(Pantalla_Login.this,"contraseña no validos",Toast.LENGTH_LONG).show();

@@ -1,9 +1,3 @@
 <resources>
     <string name="app_name">Poll-o</string>
-    <array name="itemsPrincipal">
-    <item>"Encuestas"</item>
-    <item>"Acerca de..."</item>
-    <item>"Salir"</item></array>
-
-
 </resources>
