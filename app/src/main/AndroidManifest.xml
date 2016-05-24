@@ -32,7 +32,9 @@
         <activity android:name=".AcercaDe" />
         <activity android:name=".Encuestas" />
         <activity android:name=".Graficar" />
-        <activity android:name=".Preguntas"></activity>
+        <activity android:name=".Preguntas">
+
+        </activity>
     </application>
 
 </manifest>

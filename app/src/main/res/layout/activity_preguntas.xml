@@ -8,18 +8,26 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="mx.edu.ittepic.poll_o.Preguntas"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#86d6f3">
 
     <TextView
-        android:layout_width="279dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/Encuesta_Preguntas"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center_horizontal"
-        android:background="#3341da"
-        android:textColor="#ffffff"
-        android:textAlignment="center" />
+        android:text="¿Qué tamaño de envase consume con más frecuencia?"
+        android:id="@+id/textView3" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:background="#ffffff" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Siguiente"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

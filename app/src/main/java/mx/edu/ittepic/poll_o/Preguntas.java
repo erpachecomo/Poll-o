@@ -11,7 +11,7 @@ public class Preguntas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preguntas);
-        encuesta=(TextView)findViewById(R.id.Encuesta_Preguntas);
+      //  encuesta=(TextView)findViewById(R.id.Encuesta_Preguntas);
         titulo_encuesta=getIntent().getStringExtra("seleccion");
         encuesta.setText(titulo_encuesta);
     }
