@@ -25,15 +25,16 @@
         android:text="Preguntas disponibles para graficar:"
         android:id="@+id/textView9" />
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner" />
+
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="267dp"
         android:id="@+id/scrollView2" >
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="176dp"
-            android:id="@+id/listView" />
     </ScrollView>
 
     <VideoView

@@ -70,6 +70,9 @@ public class Pantalla_Login extends AppCompatActivity {
         });
     }
     private boolean CamposVacios(String Usu,String Contra){
-        return Usu.equals("") || Contra.equals("");
+        if(Usu.equals("") || Contra.equals("")){
+            return true;
+        }
+        return false;
     }
 }
