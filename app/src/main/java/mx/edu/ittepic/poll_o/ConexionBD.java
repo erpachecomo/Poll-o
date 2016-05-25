@@ -32,6 +32,27 @@ public class ConexionBD extends SQLiteOpenHelper{
         sql.execSQL("CREATE TABLE Respuestas (idrespuesta VARCHAR(20),fk_idpregunta INTEGER,valor VARCHAR (10000)," +
                 "   FOREIGN KEY (fk_idpregunta) REFERENCES Pregunta (idpregunta) )");
 
+        //Usuarios
+
+        sql.execSQL("delete from usuario ");
+
+        sql.execSQL("insert into usuario values('3111126818','Armando','encuestador','Calle Falsa #123','hola123')");
+        sql.execSQL("insert into usuario values('3111234567','Paloma','encuestador','Calle Libano #507','hola123')");
+        //Encuesta
+        sql.execSQL("insert into Encuesta values(1,'Coca-Cola','Aprobada','2016-06-24',80)");
+        sql.execSQL("insert into Encuesta values(2,'Chivas','Aprobada','2016-06-12',50)");
+        //Empleado_encuesta
+        sql.execSQL("insert into Empleado_Encuesta values('3111126818',1)");
+        sql.execSQL("insert into Empleado_Encuesta values('3111234567',2)");
+        //Pregunta
+        sql.execSQL("insert into Pregunta values(1,'¿Que tamaño de refresco consume regularmente?',1,'opcion multiple','Botella 2 litros')");
+        sql.execSQL("insert into Pregunta values(2,'¿Que refresco es el que consume mas?',1,'opcion multiple','Coca-Cola')");
+
+        sql.execSQL("insert into Pregunta values(10,'¿Qué horario prefiere para ver los partidos?',2,'opcion multiple','21:00 pm')");
+        sql.execSQL("insert into Pregunta values(11,'¿Qué dia prefiere para ver los partidos?',2,'opcion multiple','Sabado')");
+
+
+
     }
 
     @Override
@@ -68,7 +89,7 @@ public class ConexionBD extends SQLiteOpenHelper{
 
         if (cursor.moveToFirst()) {
             do {
-                labels.add(cursor.getString(0)+"_("+cursor.getString(1)+")");
+                labels.add(cursor.getString(0)+"("+cursor.getString(1)+")");
             } while (cursor.moveToNext());
         }
 

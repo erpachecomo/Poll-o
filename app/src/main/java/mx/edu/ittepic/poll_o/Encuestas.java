@@ -27,19 +27,22 @@ public class Encuestas extends AppCompatActivity {
         conexion=new ConexionBD(this,"Poll-o",null,1);
 
         encuestasdisponibles=(ListView)findViewById(R.id.encuestas_disponibles);
+
+        cargarEncuestas();
+
         encuestasdisponibles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                encuesta_seleccionada=encuestasdisponibles.getItemAtPosition(position).toString();
+                encuesta_seleccionada = encuestasdisponibles.getItemAtPosition(position).toString();
 
-                Intent PantallaMenuEncuesta=new Intent(Encuestas.this,MenuEncuesta.class);
-                PantallaMenuEncuesta.putExtra("seleccion",encuesta_seleccionada);
+                Intent PantallaMenuEncuesta = new Intent(Encuestas.this, MenuEncuesta.class);
+                PantallaMenuEncuesta.putExtra(encuestasdisponibles.getSelectedItem()+"", encuesta_seleccionada);
                 startActivity(PantallaMenuEncuesta);
 
             }
         });
-        cargarEncuestas();
-    }
+
+    };
     public boolean onCreateOptionsMenu(Menu m){
         //cuando se crea el menu contextual
         this.getMenuInflater().inflate(R.menu.menu_login, m);
@@ -59,7 +62,7 @@ public class Encuestas extends AppCompatActivity {
 
     private void cargarEncuestas() {
 
-        List<String> lables = conexion.obtenerPreguntas();
+        List<String> lables = conexion.obtenerEncuestas();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, lables);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
