@@ -43,4 +43,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
         android:onClick="Cambiar_Acerca" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Botton_actualizar"
+        android:src="@drawable/refresh"
+        android:background="#00ffffff"
+        android:layout_below="@+id/acerca_de"
+        android:layout_alignRight="@+id/salir"
+        android:layout_alignEnd="@+id/salir"
+        android:onClick="Actualizar" />
 </RelativeLayout>
