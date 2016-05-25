@@ -1,6 +1,11 @@
 package mx.edu.ittepic.poll_o;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +14,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class MenuPrincipal extends AppCompatActivity {
     ImageButton AcercaDe,Encuestas,Salir,actualizar;
     VerificarConexionWIFI verificadorConexion;
+    ConexionBD bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +31,7 @@ public class MenuPrincipal extends AppCompatActivity {
         AcercaDe=(ImageButton)findViewById(R.id.acerca_de);
         actualizar=(ImageButton)findViewById(R.id.Botton_actualizar);
         verificadorConexion=new VerificarConexionWIFI(this);
+        bd=new ConexionBD(this,"Poll-o",null,1);
     }
     /*APARTADO PARA ACTUALIZAR COMPLETAMENTE LA BASE DE DATOS BAJANDO LOS DATOS DEL SERVIDOR*/
     public void Actualizar(View v){
@@ -33,6 +43,46 @@ public class MenuPrincipal extends AppCompatActivity {
         }
     }
     void ActualizarBaseDeDatos(){
+        try{
+            ConexionWeb web = new ConexionWeb(MenuPrincipal.this);
+            web.agregarVariables("operacion", "get_encuesta");
+            URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
+            web.execute(url);
+
+        } catch (MalformedURLException e) {
+            new AlertDialog.Builder(MenuPrincipal.this).setMessage
+                    (e.getMessage()).setTitle("Error").show();
+        }
+    }
+    void InsertarEnBaseDeDatos(String SQL){
+        try{
+            SQLiteDatabase base = bd.getReadableDatabase();
+            /*VACIO LOS DATOS DE LA TABLA DE ENCUESTA*/
+            String EliminarDatosEncuesta="DELETE *FROM Encuesta";
+            base.execSQL(EliminarDatosEncuesta);
+            /*VACIO LOS DATOS DE LA TABLA DE Empleado_Encuesta*/
+            String EliminarDatosEmp_enc="DELETE *FROM Empleado_Encuesta";
+            base.execSQL(EliminarDatosEmp_enc);
+            /*VACIO LOS DATOS DE LA TABLA DE pregunta*/
+            String EliminarDatosPregunta="DELETE *FROM Pregunta";
+            base.execSQL(EliminarDatosPregunta);
+            /*VACIO LOS DATOS DE LA TABLA DE RESPUESTAS*/
+            String EliminarDatosRespuestas="DELETE *FROM Respuestas";
+            base.execSQL(EliminarDatosRespuestas);
+            /*----------------------------------------------------------------------------------*/
+            base.execSQL(SQL);
+
+            base.close();
+            Toast.makeText(this,"SE ELIMINO CORRECTAMENTE",Toast.LENGTH_LONG).show();
+        }catch (SQLiteException e){
+            AlertDialog.Builder alerta= new AlertDialog.Builder(MenuPrincipal.this);
+            alerta.setTitle("ERROR").setMessage(e.getMessage()).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).show();
+        }
 
     }
 
@@ -41,8 +91,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
 
 
-
-
+ /*------------------------------------------------------------------------------------------------*/
     public void Cambiar_Salir(View v){
         //Yo creo que aqui debe mandar el mensaje de desconexion
         //por mientras solo lo mandare a la pagina de login.

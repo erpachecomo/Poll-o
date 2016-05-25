@@ -3,15 +3,23 @@ package mx.edu.ittepic.poll_o;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConexionWeb extends AsyncTask<URL,String,String> {
     List<String[]> variables;
-    Context form;
+    MenuPrincipal form;
 
-    public ConexionWeb(Context f){
+    public ConexionWeb(MenuPrincipal f){
         variables = new ArrayList<String[]>();
         form = f;
     }
@@ -22,10 +30,94 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
     }
     @Override
     protected String doInBackground(URL... params) {
-    return "";
+        HttpURLConnection conexion = null;
+        String datosPost = "";
+        String respuesta="";
+
+        try{
+
+            for(int i=0; i<variables.size(); i++){
+                datosPost += URLEncoder.encode(variables.get(i)[0], "UTF-8") +"="+ URLEncoder.encode(variables.get(i)[1],"UTF-8")+" ";
+            }
+
+            datosPost = datosPost.trim(); //Quita espacios antes y despues de la cadena
+            datosPost = datosPost.replaceAll(" ", "&"); //Deja un solo espacio entre palabras
+            //datosPost = datosPost.substring(0, datosPost.length()-2);
+
+
+            // Establecer la conexion
+            conexion = (HttpURLConnection) params[0].openConnection();
+            conexion.setDoOutput(true);
+            conexion.setFixedLengthStreamingMode(datosPost.length());
+            conexion.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            //Flujo de salida de datos
+            OutputStream out = new BufferedOutputStream(conexion.getOutputStream());
+            out.write(datosPost.getBytes());
+            out.flush();
+            out.close();
+
+            if(conexion.getResponseCode()==200){ //Si el recibio los datos enviados y proceso respuesta
+
+                InputStreamReader in = new InputStreamReader(conexion.getInputStream(), "UTF-8");
+                BufferedReader lector = new BufferedReader(in);
+
+                String linea = "";
+                do{
+                    linea = lector.readLine();
+
+                    if(linea!=null){
+                        respuesta += linea;
+                    }
+                }while (linea!=null);
+            }
+            else{
+                respuesta="Error_404";
+            }
+        }catch(UnknownHostException uhe){
+            return "Error_404_1";
+            //publishProgress("Error:"+uhe.getMessage());
+        }catch(IOException ioe){
+            return "Error_404_2";
+            //publishProgress("Error:"+ioe.getMessage());
+        }finally {
+            if(conexion!=null){
+                conexion.disconnect();
+                //publishProgress("Desconectado");
+            }
+        }
+
+        return respuesta;
     }
 
     protected void onPostExecute(String res){
+        String SQL="";
+        if(res.contains(",") && res.contains(";")) {
+            String[] filas = res.split(";");
+            String []columnas;
+            for (int i = 0; i < filas.length; i++){
+                columnas=filas[i].split("|");
+                for(int j=0;j< columnas.length;j++){
+                    switch (columnas.length){
+                        case 2:
+                            //Tabla Empleado encuesta
+                            break;
+                        case 3:
+                            //Tabla Respuestas
+                            break;
+                        case 5:
+                            //Tabla pregunta
+                            break;
+                        case 6:
+                            //ENcuestas
+                            SQL+="INSERT INTO Encuesta (idencuesta,compania,nombre,estado,fecha_expiracion, cantidad) VALUES ("+columnas[0]+",'"+columnas[1]+"'" +
+                                    ",'"+columnas[2]+"','"+columnas[3]+"','"+columnas[4]+"',"+columnas[5]+");";
+                            break;
+                    }
+                }
+            }
+            form.InsertarEnBaseDeDatos(SQL);
+        }
 
     }
 }
