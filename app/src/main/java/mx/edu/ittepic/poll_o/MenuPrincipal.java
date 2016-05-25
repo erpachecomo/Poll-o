@@ -44,6 +44,7 @@ public class MenuPrincipal extends AppCompatActivity {
     }
     void ActualizarBaseDeDatos(){
         try{
+
             ConexionWeb web = new ConexionWeb(MenuPrincipal.this);
             web.agregarVariables("operacion", "get_encuesta");
             URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
@@ -55,19 +56,21 @@ public class MenuPrincipal extends AppCompatActivity {
         }
     }
     void InsertarEnBaseDeDatos(String SQL){
+        Toast.makeText(this,"Se metio a Insertar en base de datos: "+SQL,Toast.LENGTH_SHORT).show();
         try{
+
             SQLiteDatabase base = bd.getReadableDatabase();
             /*VACIO LOS DATOS DE LA TABLA DE ENCUESTA*/
-            String EliminarDatosEncuesta="DELETE *FROM Encuesta";
-            base.execSQL(EliminarDatosEncuesta);
+           // String EliminarDatosEncuesta="DELETE FROM Encuesta";
+            //base.execSQL(EliminarDatosEncuesta);
             /*VACIO LOS DATOS DE LA TABLA DE Empleado_Encuesta*/
-            String EliminarDatosEmp_enc="DELETE *FROM Empleado_Encuesta";
+            String EliminarDatosEmp_enc="DELETE FROM Empleado_Encuesta";
             base.execSQL(EliminarDatosEmp_enc);
             /*VACIO LOS DATOS DE LA TABLA DE pregunta*/
-            String EliminarDatosPregunta="DELETE *FROM Pregunta";
+            String EliminarDatosPregunta="DELETE FROM Pregunta";
             base.execSQL(EliminarDatosPregunta);
             /*VACIO LOS DATOS DE LA TABLA DE RESPUESTAS*/
-            String EliminarDatosRespuestas="DELETE *FROM Respuestas";
+            String EliminarDatosRespuestas="DELETE FROM Respuestas";
             base.execSQL(EliminarDatosRespuestas);
             /*----------------------------------------------------------------------------------*/
             base.execSQL(SQL);

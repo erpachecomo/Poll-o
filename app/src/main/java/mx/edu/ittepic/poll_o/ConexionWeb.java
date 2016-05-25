@@ -2,6 +2,7 @@ package mx.edu.ittepic.poll_o;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -91,32 +92,47 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
     }
 
     protected void onPostExecute(String res){
+
         String SQL="";
-        if(res.contains(",") && res.contains(";")) {
+        if(res.contains("=") && res.contains(";")) {
+
             String[] filas = res.split(";");
-            String []columnas;
+            String[] columnas;
+
             for (int i = 0; i < filas.length; i++){
-                columnas=filas[i].split("|");
-                for(int j=0;j< columnas.length;j++){
+
+                columnas=filas[i].split("=");
+
+
+
                     switch (columnas.length){
                         case 2:
                             //Tabla Empleado encuesta
+                            SQL="INSERT INTO Empleado_Encuesta (fk_celular,fk_idencuesta) VALUES ('"+columnas[0]+"',"+columnas[1]+");";
                             break;
                         case 3:
                             //Tabla Respuestas
+                            SQL="INSERT INTO Respuestas (idrespuesta,fk_idpregunta,valor) VALUES ('"+columnas[0]+"',"+columnas[1]+",'"+columnas[2]+"');";
                             break;
                         case 5:
                             //Tabla pregunta
+                            SQL="INSERT INTO Pregunta (idpregunta,fk_idencuesta,pregunta,tipo,respuestas) VALUES ("+columnas[0]+","+columnas[1]+",'"+columnas[2]+"','"+columnas[3]+"','"+columnas[4]+"');";
                             break;
                         case 6:
                             //ENcuestas
-                            SQL+="INSERT INTO Encuesta (idencuesta,compania,nombre,estado,fecha_expiracion, cantidad) VALUES ("+columnas[0]+",'"+columnas[1]+"'" +
+                            SQL="INSERT INTO Encuesta (idencuesta,compania,nombre,estado,fecha_expiracion, cantidad) VALUES ("+columnas[0]+",'"+columnas[1]+"'" +
                                     ",'"+columnas[2]+"','"+columnas[3]+"','"+columnas[4]+"',"+columnas[5]+");";
                             break;
-                    }
+                        default:
+                            Toast.makeText(form,"No encontrado",Toast.LENGTH_SHORT).show();
+                            break;
                 }
+                form.InsertarEnBaseDeDatos(SQL);
             }
-            form.InsertarEnBaseDeDatos(SQL);
+            //Toast.makeText(form,SQL,Toast.LENGTH_SHORT).show();
+
+        }else{
+
         }
 
     }

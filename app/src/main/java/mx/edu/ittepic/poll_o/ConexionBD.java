@@ -39,8 +39,8 @@ public class ConexionBD extends SQLiteOpenHelper{
         sql.execSQL("insert into usuario values('3111126818','Armando','encuestador','Calle Falsa #123','hola123')");
         sql.execSQL("insert into usuario values('3111234567','Paloma','encuestador','Calle Libano #507','hola123')");
         //Encuesta
-        sql.execSQL("insert into Encuesta values(1,'Coca-Cola','Aprobada','2016-06-24',80)");
-        sql.execSQL("insert into Encuesta values(2,'Chivas','Aprobada','2016-06-12',50)");
+        //sql.execSQL("insert into Encuesta values(1,'Coca-Cola','Sabor que mas te gusta','Aprobada','2016-06-24',80)");
+       // sql.execSQL("insert into Encuesta values(2,'Chivas','Refuerzo que te gustaria','Aprobada','2016-06-12',50)");
         //Empleado_encuesta
         sql.execSQL("insert into Empleado_Encuesta values('3111126818',1)");
         sql.execSQL("insert into Empleado_Encuesta values('3111234567',2)");
