@@ -21,6 +21,7 @@ public class MenuPrincipal extends AppCompatActivity {
     ImageButton AcercaDe,Encuestas,Salir,actualizar;
     VerificarConexionWIFI verificadorConexion;
     ConexionBD bd;
+    String usuario_logeado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class MenuPrincipal extends AppCompatActivity {
         AcercaDe=(ImageButton)findViewById(R.id.acerca_de);
         actualizar=(ImageButton)findViewById(R.id.Botton_actualizar);
         verificadorConexion=new VerificarConexionWIFI(this);
+        usuario_logeado=getIntent().getStringExtra("Usuario");
         bd=new ConexionBD(this,"Poll-oB2",null,1);
     }
     /*APARTADO PARA ACTUALIZAR COMPLETAMENTE LA BASE DE DATOS BAJANDO LOS DATOS DEL SERVIDOR*/
@@ -64,14 +66,15 @@ public class MenuPrincipal extends AppCompatActivity {
             web.execute(url);
             Toast.makeText(this, "Empleado_Encuesta", Toast.LENGTH_SHORT).show();
 
-            /*Actualiza las Pregunta
+
+            /*Actualiza las Pregunta*/
             web = new ConexionWeb(MenuPrincipal.this);
             String EliminarDatosPregunta="DELETE FROM Pregunta";
             base.execSQL(EliminarDatosPregunta);
             web.agregarVariables("operacion", "get_pregunta");
             web.execute(url);
             Toast.makeText(this, "Pregunta", Toast.LENGTH_SHORT).show();
-            */
+
 
             /*Actualiza las respuesta*/
             web = new ConexionWeb(MenuPrincipal.this);
@@ -98,7 +101,7 @@ public class MenuPrincipal extends AppCompatActivity {
             base.execSQL(SQL);
 
             base.close();
-            //Toast.makeText(this,"SE ELIMINO CORRECTAMENTE",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"SE INSERTO CORRECTAMENTE",Toast.LENGTH_LONG).show();
         }catch (SQLiteException e){
             AlertDialog.Builder alerta= new AlertDialog.Builder(MenuPrincipal.this);
             alerta.setTitle("ERROR").setMessage(e.getMessage()).setPositiveButton("OK", new DialogInterface.OnClickListener() {

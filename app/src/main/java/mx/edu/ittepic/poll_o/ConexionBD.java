@@ -25,7 +25,7 @@ public class ConexionBD extends SQLiteOpenHelper{
         sql.execSQL("CREATE TABLE Empleado_Encuesta (fk_celular VARCHAR(10),fk_idencuesta INTEGER," +
                 "    FOREIGN KEY (fk_celular) REFERENCES Usuario (celular), FOREIGN KEY (fk_idencuesta) REFERENCES Encuesta (idencuesta))");
 
-        sql.execSQL("CREATE TABLE Pregunta (idpregunta INTEGER PRIMARY KEY,fk_idencuesta INTEGER,pregunta VARCHAR(255),tipo VARCHAR(15), respuestas VARCHAR(1000)," +
+        sql.execSQL("CREATE TABLE Pregunta (idpregunta INTEGER ,fk_idencuesta INTEGER,pregunta VARCHAR(255),tipo VARCHAR(15), respuestas VARCHAR(1000)," +
                 "   FOREIGN KEY (fk_idencuesta) REFERENCES Encuesta (idencuesta) )");
 
 

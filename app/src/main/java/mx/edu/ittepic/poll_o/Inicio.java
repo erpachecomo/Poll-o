@@ -112,7 +112,7 @@ public class Inicio extends AppCompatActivity {
             repetir=true;
             aumentoAlfa=true;
             puntero=ref;
-            sleep=10;
+            sleep=1; //modificar este a 10
         }
         public void run(){
             Canvas canvas=null;

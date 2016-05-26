@@ -13,66 +13,83 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class Pantalla_Login extends AppCompatActivity {
    ConexionBD conexion;
     EditText Campo_Usuario,Campo_Contra;
     Button Ini_Sesion;
     String Usuario,Contrasena;
+    VerificarConexionWIFI verificadorConexion;
+    boolean sesion_valida;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla__login);
+        verificadorConexion=new VerificarConexionWIFI(this);
         Campo_Usuario=(EditText)findViewById(R.id.CampoUsuario);
         Campo_Contra=(EditText)findViewById(R.id.CampoContrasena);
         Ini_Sesion=(Button)findViewById(R.id.Boton_in_sesion);
+        sesion_valida=false;
         conexion=new ConexionBD(this,"Poll-oB2",null,1);
         Usuario=Contrasena="";
         Ini_Sesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                        Usuario=Campo_Usuario.getText().toString();
-                        Contrasena=Campo_Contra.getText().toString();
-                if(!CamposVacios(Usuario,Contrasena)){
-                        try{
-                            SQLiteDatabase base = conexion.getReadableDatabase();
-                            String SQL="SELECT *FROM  Usuario WHERE celular ='"+Usuario+"'";
-                            Cursor res =base.rawQuery(SQL, null);
-                            if(!res.moveToFirst()){ //Aqui hay que quitarle el ! cuando ya este la aplicación.
+                Usuario = Campo_Usuario.getText().toString();
+                Contrasena = Campo_Contra.getText().toString();
+                if (!CamposVacios(Usuario, Contrasena)) {
+                    /*LOGIN POR MEDIO DEL SERVIDOR*/
+                    if (verificadorConexion.estaConectado()) {
+                        //CODIGO LOGEARTE CON INTERNET
+                        IniciarSesion(Usuario, Contrasena);
 
-
-                               //String contraseñaReal=res.getString(4); Esta es la linea correcta cuando funcione
-                                String contraseñaReal=Contrasena;
-                                if(Contrasena.equals(contraseñaReal)) {
-                                    Toast.makeText(Pantalla_Login.this, "Inicio correcto", Toast.LENGTH_LONG).show();
-                                    Intent MenuPrincipal= new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.MenuPrincipal.class);
-                                    startActivity(MenuPrincipal);
-                                }
-                                else{
-                                    Toast.makeText(Pantalla_Login.this,"contraseña no validos",Toast.LENGTH_LONG).show();
-                                }
-                            }else{
-                                Toast.makeText(Pantalla_Login.this,"Usuario no validos",Toast.LENGTH_LONG).show();
-                            }
-                            base.close();
-                        }catch (SQLiteException e){
-                            AlertDialog.Builder alerta= new AlertDialog.Builder(Pantalla_Login.this);
-                            alerta.setTitle("ERROR").setMessage(e.getMessage()).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            }).show();
-                        }
-                }else{
-                    Toast.makeText(Pantalla_Login.this,"Campos vacios",Toast.LENGTH_LONG).show();
+                    } else {
+                        //AQUI DEBE IR EL CODIGO PARA MANDAR UN MJS AL SERVIDOR SI NO HAY INTERNET
+                    }
+                            /*-------------------------------------*/
+                } else {
+                    Toast.makeText(Pantalla_Login.this, "Campos vacios", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
+
+    private void IniciarSesion(String usuario, String contrasena) {
+        try {
+            ConexionWeb web = new ConexionWeb(Pantalla_Login.this);
+            web.agregarVariables("operacion", "login");
+            web.agregarVariables("celular",usuario);
+            web.agregarVariables("password", contrasena);
+            URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
+            web.execute(url);
+            Toast.makeText(this, "Iniciando sesión", Toast.LENGTH_SHORT).show();
+
+        }catch (MalformedURLException e) {
+            new AlertDialog.Builder(Pantalla_Login.this).setMessage
+                    (e.getMessage()).setTitle("Error").show();
+
+        }
+
+    }
+
+    public void sesion_correcta(String Respuesta) {
+        if(Respuesta.equals("si")){
+            Toast.makeText(Pantalla_Login.this, "Inicio correcto", Toast.LENGTH_LONG).show();
+            Intent MenuPrincipal = new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.MenuPrincipal.class);
+            MenuPrincipal.putExtra("Usuario", Usuario);
+            startActivity(MenuPrincipal);
+
+        }else{
+            sesion_valida=false;
+        }
+    }
+
     private boolean CamposVacios(String Usu,String Contra){
         if(Usu.equals("") || Contra.equals("")){
             //return true; LINEA CORRECTa
-            return false;
+            return true;
         }
         return false;
     }
