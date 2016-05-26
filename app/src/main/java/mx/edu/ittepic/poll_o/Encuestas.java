@@ -24,7 +24,7 @@ public class Encuestas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encuestas);
         encuesta_seleccionada="";
-        conexion=new ConexionBD(this,"Poll-o",null,1);
+        conexion=new ConexionBD(this,"Poll-B2",null,1);
 
         encuestasdisponibles=(ListView)findViewById(R.id.encuestas_disponibles);
 
@@ -35,8 +35,10 @@ public class Encuestas extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 encuesta_seleccionada = encuestasdisponibles.getItemAtPosition(position).toString();
 
+
+
                 Intent PantallaMenuEncuesta = new Intent(Encuestas.this, MenuEncuesta.class);
-                PantallaMenuEncuesta.putExtra(encuestasdisponibles.getSelectedItem()+"", encuesta_seleccionada);
+                PantallaMenuEncuesta.putExtra("seleccion",encuesta_seleccionada);
                 startActivity(PantallaMenuEncuesta);
 
             }

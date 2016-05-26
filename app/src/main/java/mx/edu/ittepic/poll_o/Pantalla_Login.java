@@ -25,7 +25,7 @@ public class Pantalla_Login extends AppCompatActivity {
         Campo_Usuario=(EditText)findViewById(R.id.CampoUsuario);
         Campo_Contra=(EditText)findViewById(R.id.CampoContrasena);
         Ini_Sesion=(Button)findViewById(R.id.Boton_in_sesion);
-        conexion=new ConexionBD(this,"Poll-o",null,1);
+        conexion=new ConexionBD(this,"Poll-oB2",null,1);
         Usuario=Contrasena="";
         Ini_Sesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,7 +37,7 @@ public class Pantalla_Login extends AppCompatActivity {
                             SQLiteDatabase base = conexion.getReadableDatabase();
                             String SQL="SELECT *FROM  Usuario WHERE celular ='"+Usuario+"'";
                             Cursor res =base.rawQuery(SQL, null);
-                            if(!res.moveToFirst()){ //Aqui hay que quitarle el ! cuando ya este la aplicación.
+                            if(res.moveToFirst()){ //Aqui hay que quitarle el ! cuando ya este la aplicación.
 
 
                                //String contraseñaReal=res.getString(4); Esta es la linea correcta cuando funcione

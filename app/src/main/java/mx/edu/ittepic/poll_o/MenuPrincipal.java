@@ -31,7 +31,7 @@ public class MenuPrincipal extends AppCompatActivity {
         AcercaDe=(ImageButton)findViewById(R.id.acerca_de);
         actualizar=(ImageButton)findViewById(R.id.Botton_actualizar);
         verificadorConexion=new VerificarConexionWIFI(this);
-        bd=new ConexionBD(this,"Poll-o",null,1);
+        bd=new ConexionBD(this,"Poll-oB2",null,1);
     }
     /*APARTADO PARA ACTUALIZAR COMPLETAMENTE LA BASE DE DATOS BAJANDO LOS DATOS DEL SERVIDOR*/
     public void Actualizar(View v){

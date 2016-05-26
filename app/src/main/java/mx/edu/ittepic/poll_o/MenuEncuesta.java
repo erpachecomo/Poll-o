@@ -21,13 +21,18 @@ public class MenuEncuesta extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_encuesta);
         encuesta_a_Realizar=getIntent().getStringExtra("seleccion");
+
         Encuesta=(TextView)findViewById(R.id.Encuesta_a_Realizar);
         Realizar_encuesta= (Button)findViewById(R.id.RealizarEncuesta);
         Graficar=(Button)findViewById(R.id.Graficar_Resultados);
+
         Encuesta.setText(encuesta_a_Realizar);
+
         Graficar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Intent PantallaGraficar = new Intent(MenuEncuesta.this, Graficar.class);
                 PantallaGraficar.putExtra("seleccion", encuesta_a_Realizar);
                 startActivity(PantallaGraficar);
