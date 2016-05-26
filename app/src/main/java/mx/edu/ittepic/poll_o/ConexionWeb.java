@@ -92,7 +92,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
     }
 
     protected void onPostExecute(String res){
-
+        Toast.makeText(form,res,Toast.LENGTH_SHORT).show();
         String SQL="";
         if(res.contains("=") && res.contains(";")) {
 
@@ -102,10 +102,10 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
             for (int i = 0; i < filas.length; i++){
 
                 columnas=filas[i].split("=");
+                Toast.makeText(form,columnas.length+"",Toast.LENGTH_SHORT).show();
 
 
-
-                    switch (columnas.length){
+                switch (columnas.length){
                         case 2:
                             //Tabla Empleado encuesta
                             SQL="INSERT INTO Empleado_Encuesta (fk_celular,fk_idencuesta) VALUES ('"+columnas[0]+"',"+columnas[1]+");";
