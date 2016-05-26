@@ -20,10 +20,12 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
     List<String[]> variables;
     MenuPrincipal form;
     Pantalla_Login form_login;
+    int operacion; //0 es cerrar sesion, 1 Actualizar base de datos
 
-    public ConexionWeb(MenuPrincipal f){
+    public ConexionWeb(MenuPrincipal f,int n){
         variables = new ArrayList<String[]>();
         form = f;
+        operacion=n;
         form_login=null;
     }
     public ConexionWeb(Pantalla_Login f){
@@ -101,7 +103,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
 
     protected void onPostExecute(String res){
 
-        if(form!=null) {
+        if(form!=null && operacion==1) {
             Toast.makeText(form,res,Toast.LENGTH_SHORT).show();
             String SQL = "";
             if (res.contains("=") && res.contains(";")) {
@@ -144,6 +146,10 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
             } else {
 
             }
+        }
+        if(form!=null && operacion==0) {
+            Toast.makeText(form,res,Toast.LENGTH_SHORT).show();
+            form.sesion_cerrada(res);
         }
         if (form_login!=null){
             Toast.makeText(form_login,res,Toast.LENGTH_SHORT).show();

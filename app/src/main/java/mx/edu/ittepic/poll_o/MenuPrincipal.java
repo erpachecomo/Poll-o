@@ -50,7 +50,7 @@ public class MenuPrincipal extends AppCompatActivity {
             SQLiteDatabase base = bd.getReadableDatabase();
             String EliminarDatosEncuesta="DELETE FROM Encuesta";
             base.execSQL(EliminarDatosEncuesta);
-            ConexionWeb web = new ConexionWeb(MenuPrincipal.this);
+            ConexionWeb web = new ConexionWeb(MenuPrincipal.this,1);
             web.agregarVariables("operacion", "get_encuesta");
             URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
             web.execute(url);
@@ -58,7 +58,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
 
             /*Actualiza las Empleado_Encuesta*/
-            web = new ConexionWeb(MenuPrincipal.this);
+            web = new ConexionWeb(MenuPrincipal.this,1);
             String EliminarDatosEmp_enc="DELETE FROM Empleado_Encuesta";
             base.execSQL(EliminarDatosEmp_enc);
             web.agregarVariables("operacion", "get_empleado_encuesta");
@@ -68,7 +68,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
 
             /*Actualiza las Pregunta*/
-            web = new ConexionWeb(MenuPrincipal.this);
+            web = new ConexionWeb(MenuPrincipal.this,1);
             String EliminarDatosPregunta="DELETE FROM Pregunta";
             base.execSQL(EliminarDatosPregunta);
             web.agregarVariables("operacion", "get_pregunta");
@@ -77,7 +77,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
 
             /*Actualiza las respuesta*/
-            web = new ConexionWeb(MenuPrincipal.this);
+            web = new ConexionWeb(MenuPrincipal.this,1);
             String EliminarDatosRespuestas="DELETE FROM Respuestas";
             base.execSQL(EliminarDatosRespuestas);
             web.agregarVariables("operacion", "get_respuestas");
@@ -123,9 +123,40 @@ public class MenuPrincipal extends AppCompatActivity {
     public void Cambiar_Salir(View v){
         //Yo creo que aqui debe mandar el mensaje de desconexion
         //por mientras solo lo mandare a la pagina de login.
-        Intent paginaLogin=new Intent(MenuPrincipal.this,Pantalla_Login.class);
-        startActivity(paginaLogin);
+        if (verificadorConexion.estaConectado()) {
+            //CODIGO LOGEARTE CON INTERNET
+            Cerrar_Sesion(usuario_logeado);
+
+        } else {
+            //AQUI DEBE IR EL CODIGO PARA MANDAR UN MJS AL SERVIDOR SI NO HAY INTERNET
+        }
+            }
+
+    private void Cerrar_Sesion(String usuario) {
+        try {
+            ConexionWeb web = new ConexionWeb(MenuPrincipal.this,0);
+            web.agregarVariables("operacion", "logout");
+            web.agregarVariables("celular",usuario);
+            URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
+            web.execute(url);
+            Toast.makeText(this, "cerrar sesion", Toast.LENGTH_SHORT).show();
+
+        }catch (MalformedURLException e) {
+            new AlertDialog.Builder(MenuPrincipal.this).setMessage
+                    (e.getMessage()).setTitle("Error").show();
+
+        }
     }
+    public void sesion_cerrada(String Respuesta) {
+        if(Respuesta.equals("si")){
+            Toast.makeText(MenuPrincipal.this, "Sesion cerrada", Toast.LENGTH_LONG).show();
+            Intent MenuPrincipal = new Intent(MenuPrincipal.this, Pantalla_Login.class);
+            startActivity(MenuPrincipal);
+        }else{
+            Toast.makeText(MenuPrincipal.this, "no se pudo", Toast.LENGTH_LONG).show();
+        }
+    }
+
     public void Cambiar_Acerca(View v){
         //A la pagina de nuestros datos
         Intent paginaAcercaDe=new Intent(MenuPrincipal.this,AcercaDe.class);
