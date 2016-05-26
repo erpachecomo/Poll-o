@@ -24,7 +24,7 @@ public class Encuestas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encuestas);
         encuesta_seleccionada="";
-        conexion=new ConexionBD(this,"Poll-B2",null,1);
+        conexion=new ConexionBD(this,"Poll-oB2",null,1);
 
         encuestasdisponibles=(ListView)findViewById(R.id.encuestas_disponibles);
 

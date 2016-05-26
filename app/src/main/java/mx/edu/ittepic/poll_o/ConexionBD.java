@@ -34,7 +34,7 @@ public class ConexionBD extends SQLiteOpenHelper{
 
         //Usuarios
 
-        sql.execSQL("delete from usuario ");
+        //sql.execSQL("delete from usuario ");
 
         //sql.execSQL("insert into usuario values('3111126818','Armando','encuestador','Calle Falsa #123','hola123')");
         //sql.execSQL("insert into usuario values('3111234567','Paloma','encuestador','Calle Libano #507','hola123')");
@@ -45,11 +45,11 @@ public class ConexionBD extends SQLiteOpenHelper{
        // sql.execSQL("insert into Empleado_Encuesta values('3111126818',1)");
        // sql.execSQL("insert into Empleado_Encuesta values('3111234567',2)");
         //Pregunta
-        sql.execSQL("insert into Pregunta values(1,1,'¿Que tamaño de refresco consume regularmente?','opcion multiple','Botella 2 litros')");
-        sql.execSQL("insert into Pregunta values(2,1,'¿Que refresco es el que consume mas?',1,'opcion multiple','Coca-Cola')");
+        //sql.execSQL("insert into Pregunta values(1,1,'¿Que tamaño de refresco consume regularmente?','opcion multiple','Botella 2 litros')");
+        //sql.execSQL("insert into Pregunta values(2,1,'¿Que refresco es el que consume mas?','opcion multiple','Coca-Cola')");
 
-        sql.execSQL("insert into Pregunta values(10,2,'¿Qué horario prefiere para ver los partidos?','opcion multiple','21:00 pm')");
-        sql.execSQL("insert into Pregunta values(11,2,'¿Qué dia prefiere para ver los partidos?','opcion multiple','Sabado')");
+        //sql.execSQL("insert into Pregunta values(10,2,'¿Qué horario prefiere para ver los partidos?','opcion multiple','21:00 pm')");
+        //sql.execSQL("insert into Pregunta values(11,2,'¿Qué dia prefiere para ver los partidos?','opcion multiple','Sabado')");
 
 
 
