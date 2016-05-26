@@ -44,11 +44,46 @@ public class MenuPrincipal extends AppCompatActivity {
     }
     void ActualizarBaseDeDatos(){
         try{
-
+            /*Actualiza las encuestas*/
+            SQLiteDatabase base = bd.getReadableDatabase();
+            //String EliminarDatosEncuesta="DELETE FROM Encuesta";
+            //base.execSQL(EliminarDatosEncuesta);
             ConexionWeb web = new ConexionWeb(MenuPrincipal.this);
-            web.agregarVariables("operacion", "get_encuesta");
+            //web.agregarVariables("operacion", "get_encuesta");
             URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
+           // web.execute(url);
+            //Toast.makeText(this, "Encuestas", Toast.LENGTH_SHORT).show();
+
+
+            /*Actualiza las Empleado_Encuesta
+            web = new ConexionWeb(MenuPrincipal.this);
+            String EliminarDatosEmp_enc="DELETE FROM Empleado_Encuesta";
+            base.execSQL(EliminarDatosEmp_enc);
+            web.agregarVariables("operacion", "get_empleado_encuesta");
+            web.agregarVariables("celular", "3112633940");//Aqui se va a pasar el numero de telefono con el que se logio.
             web.execute(url);
+            Toast.makeText(this, "Empleado_Encuesta", Toast.LENGTH_SHORT).show();
+            */
+
+            /*Actualiza las Pregunta*/
+            web = new ConexionWeb(MenuPrincipal.this);
+            String EliminarDatosPregunta="DELETE FROM Pregunta";
+            base.execSQL(EliminarDatosPregunta);
+            web.agregarVariables("operacion", "get_pregunta");
+            web.execute(url);
+            Toast.makeText(this, "Pregunta", Toast.LENGTH_SHORT).show();
+
+
+            /*Actualiza las respuesta
+            web = new ConexionWeb(MenuPrincipal.this);
+            String EliminarDatosRespuestas="DELETE FROM Respuestas";
+            base.execSQL(EliminarDatosRespuestas);
+            web.agregarVariables("operacion", "get_respuestas");
+            web.execute(url);
+            Toast.makeText(this, "Respuestas", Toast.LENGTH_SHORT).show();
+            */
+            base.close();
+
 
         } catch (MalformedURLException e) {
             new AlertDialog.Builder(MenuPrincipal.this).setMessage
@@ -56,27 +91,15 @@ public class MenuPrincipal extends AppCompatActivity {
         }
     }
     void InsertarEnBaseDeDatos(String SQL){
-        Toast.makeText(this,"Se metio a Insertar en base de datos: "+SQL,Toast.LENGTH_SHORT).show();
         try{
 
             SQLiteDatabase base = bd.getReadableDatabase();
-            /*VACIO LOS DATOS DE LA TABLA DE ENCUESTA*/
-           // String EliminarDatosEncuesta="DELETE FROM Encuesta";
-            //base.execSQL(EliminarDatosEncuesta);
-            /*VACIO LOS DATOS DE LA TABLA DE Empleado_Encuesta*/
-            String EliminarDatosEmp_enc="DELETE FROM Empleado_Encuesta";
-            base.execSQL(EliminarDatosEmp_enc);
-            /*VACIO LOS DATOS DE LA TABLA DE pregunta*/
-            String EliminarDatosPregunta="DELETE FROM Pregunta";
-            base.execSQL(EliminarDatosPregunta);
-            /*VACIO LOS DATOS DE LA TABLA DE RESPUESTAS*/
-            String EliminarDatosRespuestas="DELETE FROM Respuestas";
-            base.execSQL(EliminarDatosRespuestas);
+
             /*----------------------------------------------------------------------------------*/
             base.execSQL(SQL);
 
             base.close();
-            Toast.makeText(this,"SE ELIMINO CORRECTAMENTE",Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,"SE ELIMINO CORRECTAMENTE",Toast.LENGTH_LONG).show();
         }catch (SQLiteException e){
             AlertDialog.Builder alerta= new AlertDialog.Builder(MenuPrincipal.this);
             alerta.setTitle("ERROR").setMessage(e.getMessage()).setPositiveButton("OK", new DialogInterface.OnClickListener() {
