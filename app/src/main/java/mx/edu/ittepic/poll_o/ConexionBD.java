@@ -45,11 +45,11 @@ public class ConexionBD extends SQLiteOpenHelper{
        // sql.execSQL("insert into Empleado_Encuesta values('3111126818',1)");
        // sql.execSQL("insert into Empleado_Encuesta values('3111234567',2)");
         //Pregunta
-        sql.execSQL("insert into Pregunta values(1,'¿Que tamaño de refresco consume regularmente?',1,'opcion multiple','Botella 2 litros')");
-        sql.execSQL("insert into Pregunta values(2,'¿Que refresco es el que consume mas?',1,'opcion multiple','Coca-Cola')");
+        sql.execSQL("insert into Pregunta values(1,1,'¿Que tamaño de refresco consume regularmente?','opcion multiple','Botella 2 litros')");
+        sql.execSQL("insert into Pregunta values(2,1,'¿Que refresco es el que consume mas?',1,'opcion multiple','Coca-Cola')");
 
-        sql.execSQL("insert into Pregunta values(10,'¿Qué horario prefiere para ver los partidos?',2,'opcion multiple','21:00 pm')");
-        sql.execSQL("insert into Pregunta values(11,'¿Qué dia prefiere para ver los partidos?',2,'opcion multiple','Sabado')");
+        sql.execSQL("insert into Pregunta values(10,2,'¿Qué horario prefiere para ver los partidos?','opcion multiple','21:00 pm')");
+        sql.execSQL("insert into Pregunta values(11,2,'¿Qué dia prefiere para ver los partidos?','opcion multiple','Sabado')");
 
 
 
@@ -59,17 +59,17 @@ public class ConexionBD extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-    public List<String> obtenerPreguntas(){
+    public List<String> obtenerPreguntas(int id){
         List<String> labels = new ArrayList<String>();
 
-        String selectQuery = "SELECT  * FROM Pregunta";
+        String selectQuery = "SELECT  * FROM Pregunta where fk_idencuesta = "+id;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
-                labels.add(cursor.getString(0)+"_("+cursor.getString(1)+")");
+                labels.add(cursor.getString(0)+"-"+cursor.getString(2));
             } while (cursor.moveToNext());
         }
 
@@ -89,7 +89,7 @@ public class ConexionBD extends SQLiteOpenHelper{
 
         if (cursor.moveToFirst()) {
             do {
-                labels.add(cursor.getString(0)+"("+cursor.getString(1)+")");
+                labels.add(cursor.getString(0)+"-"+cursor.getString(1));
             } while (cursor.moveToNext());
         }
 
