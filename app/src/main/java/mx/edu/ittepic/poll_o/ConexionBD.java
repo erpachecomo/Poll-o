@@ -1,10 +1,15 @@
 package mx.edu.ittepic.poll_o;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +84,32 @@ public class ConexionBD extends SQLiteOpenHelper{
 
         return labels;
     }
+
+    public ArrayList<Respuestas> obtenerRespuestas(int id){
+            ArrayList<Respuestas> labels = new ArrayList<Respuestas>();
+            String selectQuery = "SELECT valor FROM Respuestas WHERE fk_idpregunta= " + id;
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    Respuestas respuestas = new Respuestas();
+                    respuestas.setNombre(cursor.getString(0));
+                    String Sql_No_registros = "SELECT COUNT( valor ) AS total FROM Respuestas  WHERE valor ='" + cursor.getString(0)+"'";
+                    Cursor cursor1 = db.rawQuery(Sql_No_registros, null);
+                    cursor1.moveToFirst();
+                    int total = cursor1.getInt(cursor1.getColumnIndexOrThrow("total"));
+                    respuestas.setValor(total);
+                    labels.add(respuestas);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+
+
+            return labels;
+
+    }
+
     public List<String> obtenerEncuestas(){
         List<String> labels = new ArrayList<String>();
 
@@ -100,4 +131,14 @@ public class ConexionBD extends SQLiteOpenHelper{
         return labels;
     }
 
+    public float getTotalRespuestas(int id) {
+        String selectQuery="SELECT COUNT(valor) AS total FROM Respuestas WHERE fk_idpregunta= "+id;
+        SQLiteDatabase db =this.getReadableDatabase();
+        Cursor cursor= db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        int total = cursor.getInt(cursor.getColumnIndexOrThrow("total"));
+        cursor.close();
+        db.close();
+        return total;
+    }
 }

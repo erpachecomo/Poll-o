@@ -34,18 +34,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Graficar"
-        android:id="@+id/button" />
+        android:id="@+id/Graficar_botton"
+        android:onClick="Grafica" />
 
-    <VideoView
-        android:layout_width="wrap_content"
-        android:layout_height="201dp"
-        android:id="@+id/Graficas" />
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="267dp"
-        android:id="@+id/scrollView2" >
-
-    </ScrollView>
-
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp" />
 </LinearLayout>

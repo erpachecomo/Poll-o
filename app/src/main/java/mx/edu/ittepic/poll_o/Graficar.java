@@ -1,12 +1,24 @@
 package mx.edu.ittepic.poll_o;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Graficar extends AppCompatActivity {
@@ -14,26 +26,98 @@ public class Graficar extends AppCompatActivity {
     Spinner pregunta;
     ConexionBD conexion;
     String titulo_encuesta;
+    private PieChart pieChart;
+    Button Graficar;
+    int ide;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graficar);
         encuesta=(TextView)findViewById(R.id.Encuesta_grafica);
+        pieChart = (PieChart) findViewById(R.id.pieChart);
         pregunta = (Spinner) findViewById(R.id.spinner);
         conexion=new ConexionBD(this,"Poll-oB2",null,1);
+        Graficar= (Button)findViewById(R.id.Graficar_botton);
 
         titulo_encuesta=getIntent().getStringExtra("seleccion");
         String[] arreglo = titulo_encuesta.split("-");
-        int ide = Integer.parseInt(arreglo[0]);
+        ide = Integer.parseInt(arreglo[0]);
 
         Toast.makeText(this,"ID: "+arreglo[0],Toast.LENGTH_LONG).show();
 
         encuesta.setText(titulo_encuesta);
         cargarPreguntasSpinner(ide);
+        /*ESTOY HACIENDO PRUEBAS CON LAS GRAFICAS*/
 
+
+
+
+        /*----------------------------------------------------------------*/
 
     }
+    public void Grafica(View v){
+        try {
+            String pre_seleccionada[] = pregunta.getSelectedItem().toString().split("-");
+            Toast.makeText(Graficar.this, "Seleccion: " + pre_seleccionada[0], Toast.LENGTH_SHORT).show();
+            List<Respuestas> respuestas_ = conexion.obtenerRespuestas(Integer.parseInt(pre_seleccionada[0].toString()));
+        /*definimos algunos atributos*/
+            pieChart.setHoleRadius(40f);
+            pieChart.setDrawYValues(true);
+            pieChart.setDrawXValues(true);
+            pieChart.setRotationEnabled(true);
+            pieChart.animateXY(1500, 1500);
 
+        /*creamos una lista para los valores Y*/
+            ArrayList<Entry> yVals = new ArrayList<Entry>();
+            ArrayList<String> xVals = new ArrayList<String>();
+
+
+            float total_votos = conexion.getTotalRespuestas(ide);
+
+            for (int index = 0; index < respuestas_.size(); index++) {
+                float votos = (respuestas_.get(index).getValor() / total_votos) * 100f;
+                yVals.add(new Entry(votos, index));
+                xVals.add(respuestas_.get(index).getNombre());
+            }
+
+ 		/*creamos una lista de colores*/
+            ArrayList<Integer> colors = new ArrayList<Integer>();
+            colors.add(getResources().getColor(R.color.red_flat));
+            colors.add(getResources().getColor(R.color.green_flat));
+
+ 		/*seteamos los valores de Y y los colores*/
+            PieDataSet set1 = new PieDataSet(yVals, "Resultados");
+            set1.setSliceSpace(3f);
+            set1.setColors(colors);
+
+		/*seteamos los valores de X*/
+            PieData data = new PieData(xVals, set1);
+            pieChart.setData(data);
+            pieChart.highlightValues(null);
+            pieChart.invalidate();
+
+        /*Ocutar descripcion*/
+            pieChart.setDescription("");
+        /*Ocultar leyenda*/
+            pieChart.setDrawLegend(false);
+        }catch (SQLiteException e){
+            AlertDialog.Builder alerta= new AlertDialog.Builder(Graficar.this);
+            alerta.setTitle("ERROR").setMessage(e.getMessage()).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).show();
+        }catch (IllegalStateException xe){
+            AlertDialog.Builder alerta= new AlertDialog.Builder(Graficar.this);
+            alerta.setTitle("ERROR").setMessage(xe.getMessage()).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).show();
+        }
+    }
     private void cargarPreguntasSpinner(int id) {
 
         List<String> lables = conexion.obtenerPreguntas(id);
