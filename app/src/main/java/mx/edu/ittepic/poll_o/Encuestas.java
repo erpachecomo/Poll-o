@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Encuestas extends AppCompatActivity {
@@ -28,14 +29,17 @@ public class Encuestas extends AppCompatActivity {
 
         encuestasdisponibles=(ListView)findViewById(R.id.encuestas_disponibles);
 
-        cargarEncuestas();
+        ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
+        final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
+        encuestasdisponibles.setAdapter(Adapter);
+
+        //cargarEncuestas();
 
         encuestasdisponibles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                encuesta_seleccionada = encuestasdisponibles.getItemAtPosition(position).toString();
-
-
+                encuesta_seleccionada= Adapter.getItemId(position)+"-"+Adapter.getItemCompania(position);
+                //encuesta_seleccionada = encuestasdisponibles.getItemAtPosition(position).toString();
 
                 Intent PantallaMenuEncuesta = new Intent(Encuestas.this, MenuEncuesta.class);
                 PantallaMenuEncuesta.putExtra("seleccion",encuesta_seleccionada);
@@ -45,6 +49,10 @@ public class Encuestas extends AppCompatActivity {
         });
 
     };
+    private ArrayList<Encuesta_detalle> obtenerItems() {
+        ArrayList<Encuesta_detalle> lables=conexion.obtenerEnc();
+        return lables;
+    }
     public boolean onCreateOptionsMenu(Menu m){
         //cuando se crea el menu contextual
         this.getMenuInflater().inflate(R.menu.menu_login, m);
