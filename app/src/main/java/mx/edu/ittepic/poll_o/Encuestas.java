@@ -10,19 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import java.util.List;
 
 public class Encuestas extends AppCompatActivity {
-    LinearLayout layun;
-    EditText txtRespuesta;
-    RadioButton opciones;
-
     ListView encuestasdisponibles;
     String encuesta_seleccionada;
     ConexionBD conexion;
@@ -30,11 +23,10 @@ public class Encuestas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encuestas);
-
-        encuestasdisponibles=(ListView)findViewById(R.id.encuestas_disponibles);
-
         encuesta_seleccionada="";
         conexion=new ConexionBD(this,"Poll-oB2",null,1);
+
+        encuestasdisponibles=(ListView)findViewById(R.id.encuestas_disponibles);
 
         cargarEncuestas();
 

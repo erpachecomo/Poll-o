@@ -3,6 +3,7 @@ package mx.edu.ittepic.poll_o;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -110,6 +111,7 @@ public class ConexionBD extends SQLiteOpenHelper{
 
     }
 
+
     public List<String> obtenerEncuestas(){
         List<String> labels = new ArrayList<String>();
 
@@ -129,6 +131,27 @@ public class ConexionBD extends SQLiteOpenHelper{
 
 
         return labels;
+    }
+    public ArrayList<Encuesta_detalle> obtenerEnc(){
+        ArrayList<Encuesta_detalle> labels = new ArrayList<Encuesta_detalle>();
+        String selectQuery = "SELECT  * FROM Encuesta";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+               Encuesta_detalle encuestini = new Encuesta_detalle();
+                encuestini.setId(Integer.parseInt(cursor.getString(0)));
+               encuestini.setCompania(cursor.getString(1));
+                encuestini.setNombre(cursor.getString(2));
+                labels.add(encuestini);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+
+        return labels;
+
     }
 
     public float getTotalRespuestas(int id) {

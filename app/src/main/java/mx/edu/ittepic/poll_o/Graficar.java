@@ -3,6 +3,7 @@ package mx.edu.ittepic.poll_o;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteException;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Graficar extends AppCompatActivity {
@@ -58,8 +60,18 @@ public class Graficar extends AppCompatActivity {
     public void Grafica(View v){
         try {
             String pre_seleccionada[] = pregunta.getSelectedItem().toString().split("-");
-            Toast.makeText(Graficar.this, "Seleccion: " + pre_seleccionada[0], Toast.LENGTH_SHORT).show();
             List<Respuestas> respuestas_ = conexion.obtenerRespuestas(Integer.parseInt(pre_seleccionada[0].toString()));
+        /*QUITO REPETIDOS */
+            for(int a=0;a<respuestas_.size();a++){
+                for(int b=a+1;b<respuestas_.size();b++){
+                    if(respuestas_.get(a).getNombre().equalsIgnoreCase(respuestas_.get(b).getNombre())){
+                        respuestas_.remove(b);
+                        b--;
+                    }
+                }
+            }
+
+            /*----------*/
         /*definimos algunos atributos*/
             pieChart.setHoleRadius(40f);
             pieChart.setDrawYValues(true);
@@ -72,9 +84,10 @@ public class Graficar extends AppCompatActivity {
             ArrayList<String> xVals = new ArrayList<String>();
 
 
-            float total_votos = conexion.getTotalRespuestas(ide);
+            float total_votos = conexion.getTotalRespuestas(Integer.parseInt(pre_seleccionada[0].toString()));
 
             for (int index = 0; index < respuestas_.size(); index++) {
+
                 float votos = (respuestas_.get(index).getValor() / total_votos) * 100f;
                 yVals.add(new Entry(votos, index));
                 xVals.add(respuestas_.get(index).getNombre());
@@ -84,6 +97,11 @@ public class Graficar extends AppCompatActivity {
             ArrayList<Integer> colors = new ArrayList<Integer>();
             colors.add(getResources().getColor(R.color.red_flat));
             colors.add(getResources().getColor(R.color.green_flat));
+            colors.add(Color.MAGENTA);
+            colors.add(Color.CYAN);
+            colors.add(Color.BLUE);
+            colors.add(Color.RED);
+            colors.add(Color.YELLOW);
 
  		/*seteamos los valores de Y y los colores*/
             PieDataSet set1 = new PieDataSet(yVals, "Resultados");
