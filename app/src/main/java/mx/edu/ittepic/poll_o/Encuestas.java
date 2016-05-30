@@ -49,6 +49,7 @@ public class Encuestas extends AppCompatActivity {
         });
 
     };
+    //comentario
     private ArrayList<Encuesta_detalle> obtenerItems() {
         ArrayList<Encuesta_detalle> lables=conexion.obtenerEnc();
         return lables;
