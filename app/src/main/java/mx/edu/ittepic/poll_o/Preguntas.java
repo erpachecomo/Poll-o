@@ -88,14 +88,18 @@ public class Preguntas extends AppCompatActivity {
                 break;
             case "opcion":
                 String[] opciones = opc.split(",");
+
                 opcion = new RadioButton[opciones.length];
+                RadioGroup rg = new RadioGroup(this);
+                rg.setOrientation(RadioGroup.VERTICAL);
                 nOpciones = opciones.length;
 
                 for(int i =0;i<opcion.length;i++) {
                     opcion[i] = new RadioButton(this);
                     opcion[i].setText(opciones[i]);
-                    layun.addView(opcion[i]);
+                    rg.addView(opcion[i]);
                 }
+                layun.addView(rg);
                 break;
             case "seleccion":
                 String[] opcioncini = opc.split(",");
