@@ -21,6 +21,9 @@ public class Pantalla_Login extends AppCompatActivity {
     EditText Campo_Usuario,Campo_Contra;
     Button Ini_Sesion;
     String Usuario,Contrasena;
+
+
+
     VerificarConexionWIFI verificadorConexion;
     boolean sesion_valida;
     @Override
