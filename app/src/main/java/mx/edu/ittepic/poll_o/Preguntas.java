@@ -1,6 +1,7 @@
 package mx.edu.ittepic.poll_o;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.SweepGradient;
@@ -56,8 +57,22 @@ public class Preguntas extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 con++;
-                layun.removeViews(2,nOpciones);
-                cargarPreguntas(con);
+                if(con<preguntas.length) {
+                    layun.removeViews(2, nOpciones);
+                    cargarPreguntas(con);
+                }
+                else{
+                    AlertDialog.Builder alertini = new AlertDialog.Builder(Preguntas.this);
+                    alertini.setTitle("Atencion");
+                    alertini.setMessage("La encuesta ha finalizado");
+                    alertini.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertini.show();
+                }
             }
         });
 
