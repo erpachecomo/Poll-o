@@ -28,6 +28,10 @@ public class Inicio extends AppCompatActivity {
     int alfa;
     float progreso,tope,aumento;
     Lienzo lienzo;
+    /*ACTUALIZAR AUTOMATICAMENTE SI HAY INTERNET*/
+    ConexionBD conexion;
+    VerificarConexionWIFI verificadorConexion;
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,11 @@ public class Inicio extends AppCompatActivity {
         lienzo=new Lienzo(this);
         setContentView(lienzo);
         alfa=0;
+        /*VARIABLES PARA ACTUALIZAR BASE DE DATOS*/
+        conexion=new ConexionBD(this,"Poll-oB2",null,1);
+        verificadorConexion=new VerificarConexionWIFI(this);
 
+        /*--------------------------------*/
         tamanoPantalla = new Point();
         Display display = getWindowManager().getDefaultDisplay();
         display.getSize(tamanoPantalla);

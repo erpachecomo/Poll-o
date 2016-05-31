@@ -113,7 +113,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
     protected void onPostExecute(String res){
 
         if(form!=null && operacion==1) {
-            Toast.makeText(form,res,Toast.LENGTH_SHORT).show();
+            //Toast.makeText(form,res,Toast.LENGTH_SHORT).show();
             String SQL = "";
             if (res.contains("=") && res.contains(";")) {
 
@@ -123,7 +123,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
                 for (int i = 0; i < filas.length; i++) {
 
                     columnas = filas[i].split("=");
-                    Toast.makeText(form, columnas.length + "", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(form, columnas.length + "", Toast.LENGTH_SHORT).show();
 
 
                     switch (columnas.length) {
@@ -134,7 +134,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
                         case 3:
                             //Tabla Respuestas
                             SQL = "INSERT INTO Respuestas (fk_idpregunta,valor) VALUES (" + columnas[1] + ",'" + columnas[2] + "');";
-                            Toast.makeText(form,SQL,Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(form,SQL,Toast.LENGTH_SHORT).show();
                             break;
                         case 5:
                             //Tabla pregunta

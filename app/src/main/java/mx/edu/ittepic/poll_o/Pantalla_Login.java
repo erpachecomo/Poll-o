@@ -117,7 +117,7 @@ public class Pantalla_Login extends AppCompatActivity {
         }
     }
     void InsertarEnBaseDeDatos(String SQL){
-        Toast.makeText(Pantalla_Login.this, SQL, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Pantalla_Login.this, SQL, Toast.LENGTH_SHORT).show();
         try{
 
             SQLiteDatabase base = conexion.getReadableDatabase();

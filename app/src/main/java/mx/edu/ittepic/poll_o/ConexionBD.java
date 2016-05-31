@@ -41,6 +41,8 @@ public class ConexionBD extends SQLiteOpenHelper{
         sql.execSQL("CREATE TABLE Respuestas (idrespuesta INTEGER PRIMARY KEY AUTOINCREMENT,fk_idpregunta INTEGER,valor VARCHAR (10000)," +
                 "   FOREIGN KEY (fk_idpregunta) REFERENCES Pregunta (idpregunta) )");
 
+        sql.execSQL("CREATE TABLE RRespuestas (Ridrespuesta INTEGER PRIMARY KEY AUTOINCREMENT,Rfk_idpregunta INTEGER,Rvalor VARCHAR (10000)," +
+                "   FOREIGN KEY (Rfk_idpregunta) REFERENCES Pregunta (idpregunta) )");
         //Usuarios
 
         sql.execSQL("delete from respuestas ");
@@ -89,30 +91,7 @@ public class ConexionBD extends SQLiteOpenHelper{
         return labels;
     }
 
-    public ArrayList<Respuestas> obtenerRespuestas(int id){
-        ArrayList<Respuestas> labels = new ArrayList<Respuestas>();
-        String selectQuery = "SELECT valor FROM Respuestas WHERE fk_idpregunta= " + id;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()) {
-            do {
-                Respuestas respuestas = new Respuestas();
-                respuestas.setNombre(cursor.getString(0));
-                String Sql_No_registros = "SELECT COUNT( valor ) AS total FROM Respuestas  WHERE valor ='" + cursor.getString(0)+"'";
-                Cursor cursor1 = db.rawQuery(Sql_No_registros, null);
-                cursor1.moveToFirst();
-                int total = cursor1.getInt(cursor1.getColumnIndexOrThrow("total"));
-                respuestas.setValor(total);
-                labels.add(respuestas);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
 
-
-        return labels;
-
-    }
 
 
     public List<String> obtenerEncuestas(){
@@ -147,6 +126,31 @@ public class ConexionBD extends SQLiteOpenHelper{
                 encuestini.setCompania(cursor.getString(1));
                 encuestini.setNombre(cursor.getString(2));
                 labels.add(encuestini);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+
+        return labels;
+
+    }
+
+    public ArrayList<Respuestas> obtenerRespuestas(int id){
+        ArrayList<Respuestas> labels = new ArrayList<Respuestas>();
+        String selectQuery = "SELECT valor FROM Respuestas WHERE fk_idpregunta= " + id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Respuestas respuestas = new Respuestas();
+                respuestas.setNombre(cursor.getString(0));
+                String Sql_No_registros = "SELECT COUNT( valor ) AS total FROM Respuestas  WHERE valor ='" + cursor.getString(0)+"'";
+                Cursor cursor1 = db.rawQuery(Sql_No_registros, null);
+                cursor1.moveToFirst();
+                int total = cursor1.getInt(cursor1.getColumnIndexOrThrow("total"));
+                respuestas.setValor(total);
+                labels.add(respuestas);
             } while (cursor.moveToNext());
         }
         cursor.close();
