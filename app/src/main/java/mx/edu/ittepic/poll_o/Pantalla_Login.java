@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Pantalla_Login extends AppCompatActivity {
    ConexionBD conexion;
@@ -61,7 +62,7 @@ public class Pantalla_Login extends AppCompatActivity {
 
     private void IniciarSesion(String usuario, String contrasena) {
         try {
-            ConexionWeb web = new ConexionWeb(Pantalla_Login.this);
+            ConexionWeb web = new ConexionWeb(Pantalla_Login.this,0);
             web.agregarVariables("operacion", "login");
             web.agregarVariables("celular",usuario);
             web.agregarVariables("password", contrasena);
@@ -82,13 +83,62 @@ public class Pantalla_Login extends AppCompatActivity {
             Toast.makeText(Pantalla_Login.this, "Inicio correcto", Toast.LENGTH_LONG).show();
             Intent MenuPrincipal = new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.MenuPrincipal.class);
             MenuPrincipal.putExtra("Usuario", Usuario);
-            startActivity(MenuPrincipal);
 
-        }else{
-            sesion_valida=false;
+            startActivity(MenuPrincipal);
+        }
+        if(Respuesta.equals("cliente")){
+            ActualizarBaseDeDatos();
+            Toast.makeText(Pantalla_Login.this,"Inicio correcto",Toast.LENGTH_SHORT).show();
+            Intent Encuestas= new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.Encuestas.class);
+            Encuestas.putExtra("Usuario",Usuario);
+            Encuestas.putExtra("Tipo","1");
+            startActivity(Encuestas);
+            super.onResume();
         }
     }
+    void ActualizarBaseDeDatos(){
+        try{
+            /*Actualiza las encuestas*/
+            SQLiteDatabase base = conexion.getReadableDatabase();
+            String EliminarDatosEncuesta="DELETE FROM Encuesta";
+            base.execSQL(EliminarDatosEncuesta);
+            ConexionWeb web = new ConexionWeb(Pantalla_Login.this,1);
+            web.agregarVariables("operacion", "get_encuesta_cliente");
+            web.agregarVariables("celular", Usuario);
+            URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
+            web.execute(url);
+            Toast.makeText(this, "Encuestas", Toast.LENGTH_SHORT).show();
 
+            base.close();
+
+        } catch (MalformedURLException e) {
+            new AlertDialog.Builder(Pantalla_Login.this).setMessage
+                    (e.getMessage()).setTitle("Error").show();
+        }
+    }
+    void InsertarEnBaseDeDatos(String SQL){
+        Toast.makeText(Pantalla_Login.this, SQL, Toast.LENGTH_SHORT).show();
+        try{
+
+            SQLiteDatabase base = conexion.getReadableDatabase();
+
+            /*----------------------------------------------------------------------------------*/
+            base.execSQL(SQL);
+
+            base.close();
+            Toast.makeText(this,"SE INSERTO CORRECTAMENTE",Toast.LENGTH_LONG).show();
+
+        }catch (SQLiteException e){
+            AlertDialog.Builder alerta= new AlertDialog.Builder(Pantalla_Login.this);
+            alerta.setTitle("ERROR").setMessage(e.getMessage()).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).show();
+        }
+
+    }
     private boolean CamposVacios(String Usu,String Contra){
         if(Usu.equals("") || Contra.equals("")){
             //return true; LINEA CORRECTa

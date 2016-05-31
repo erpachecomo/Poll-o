@@ -34,6 +34,7 @@ public class MenuPrincipal extends AppCompatActivity {
         verificadorConexion=new VerificarConexionWIFI(this);
         usuario_logeado=getIntent().getStringExtra("Usuario");
         bd=new ConexionBD(this,"Poll-oB2",null,1);
+        ActualizarBaseDeDatos2();
     }
     /*APARTADO PARA ACTUALIZAR COMPLETAMENTE LA BASE DE DATOS BAJANDO LOS DATOS DEL SERVIDOR*/
     public void Actualizar(View v){
@@ -83,6 +84,26 @@ public class MenuPrincipal extends AppCompatActivity {
             web.agregarVariables("operacion", "get_respuestas");
             web.execute(url);
             Toast.makeText(this, "Respuestas", Toast.LENGTH_SHORT).show();
+
+            base.close();
+
+
+        } catch (MalformedURLException e) {
+            new AlertDialog.Builder(MenuPrincipal.this).setMessage
+                    (e.getMessage()).setTitle("Error").show();
+        }
+    }
+    void ActualizarBaseDeDatos2(){
+        try{
+            /*Actualiza las encuestas*/
+            SQLiteDatabase base = bd.getReadableDatabase();
+            String EliminarDatosEncuesta="DELETE FROM Encuesta";
+            base.execSQL(EliminarDatosEncuesta);
+            ConexionWeb web = new ConexionWeb(MenuPrincipal.this,1);
+            web.agregarVariables("operacion", "get_encuesta");
+            URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
+            web.execute(url);
+            Toast.makeText(this, "Encuestas", Toast.LENGTH_SHORT).show();
 
             base.close();
 
@@ -165,6 +186,8 @@ public class MenuPrincipal extends AppCompatActivity {
     public void Cambiar_Encuestas(View v){
         //A la pagina de nuestros datos
         Intent paginaEncuestas=new Intent(MenuPrincipal.this,Encuestas.class);
+        paginaEncuestas.putExtra("Usuario",usuario_logeado);
+        paginaEncuestas.putExtra("Tipo","0");
         startActivity(paginaEncuestas);
     }
 }

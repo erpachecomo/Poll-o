@@ -3,6 +3,8 @@ package mx.edu.ittepic.poll_o;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +24,21 @@ public class Encuestas extends AppCompatActivity {
     ListView encuestasdisponibles;
     String encuesta_seleccionada;
     ConexionBD conexion;
+    int tipo_usuario;//Variable para saber que tipo de usuario es
+    String Usuario_Logeado;
+    //ConexionBD bd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encuestas);
+        encuestasdisponibles=(ListView)findViewById(R.id.encuestas_disponibles);
         encuesta_seleccionada="";
         conexion=new ConexionBD(this,"Poll-oB2",null,1);
-
-        encuestasdisponibles=(ListView)findViewById(R.id.encuestas_disponibles);
-
+        //bd=new ConexionBD(this,"Poll-oB2",null,1);
+        tipo_usuario=Integer.parseInt(getIntent().getStringExtra("Tipo"));
+        Usuario_Logeado=getIntent().getStringExtra("Usuario");
         ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
+        Toast.makeText(Encuestas.this, ""+itemsEncuesta.size(), Toast.LENGTH_SHORT).show();
         final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
         encuestasdisponibles.setAdapter(Adapter);
 
@@ -78,4 +87,5 @@ public class Encuestas extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         encuestasdisponibles.setAdapter(dataAdapter);
     }
+    
 }

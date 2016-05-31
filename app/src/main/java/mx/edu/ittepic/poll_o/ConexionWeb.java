@@ -20,6 +20,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
     List<String[]> variables;
     MenuPrincipal form;
     Pantalla_Login form_login;
+    Encuestas form_Encuestas;
     int operacion; //0 es cerrar sesion, 1 Actualizar base de datos
 
     public ConexionWeb(MenuPrincipal f,int n){
@@ -27,13 +28,21 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
         form = f;
         operacion=n;
         form_login=null;
+        form_Encuestas=null;
     }
-    public ConexionWeb(Pantalla_Login f){
+    public ConexionWeb(Pantalla_Login f,int operac){
         variables = new ArrayList<String[]>();
+        operacion=operac;
         form_login = f;
         form=null;
+        form_Encuestas=null;
     }
-
+    public ConexionWeb(Encuestas f){
+        variables = new ArrayList<String[]>();
+        form_login = null;
+        form=null;
+        form_Encuestas=f;
+    }
     public void agregarVariables(String id, String dato){
         String[] temp = {id, dato};
         variables.add(temp);
@@ -151,9 +160,38 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
             Toast.makeText(form,res,Toast.LENGTH_SHORT).show();
             form.sesion_cerrada(res);
         }
-        if (form_login!=null){
+        if (form_login!=null && operacion==0){
             Toast.makeText(form_login,res,Toast.LENGTH_SHORT).show();
             form_login.sesion_correcta(res);
+        }
+        if (form_login!=null && operacion==1){
+            Toast.makeText(form_login,res,Toast.LENGTH_SHORT).show();
+            String SQL = "";
+            if (res.contains("=") && res.contains(";")) {
+
+                String[] filas = res.split(";");
+                String[] columnas;
+
+                for (int i = 0; i < filas.length; i++) {
+
+                    columnas = filas[i].split("=");
+                    Toast.makeText(form_login, columnas.length + "", Toast.LENGTH_SHORT).show();
+
+
+                    switch (columnas.length) {
+                        case 6:
+                            //ENcuestas
+                            SQL = "INSERT INTO Encuesta (idencuesta,compania,nombre,estado,fecha_expiracion, cantidad) VALUES (" + columnas[0] + ",'" + columnas[1] + "'" +
+                                    ",'" + columnas[2] + "','" + columnas[3] + "','" + columnas[4] + "'," + columnas[5] + ");";
+                            break;
+                    }
+                    form_login.InsertarEnBaseDeDatos(SQL);
+                }
+                //Toast.makeText(form,SQL,Toast.LENGTH_SHORT).show();
+
+            } else {
+
+            }
         }
     }
 }
