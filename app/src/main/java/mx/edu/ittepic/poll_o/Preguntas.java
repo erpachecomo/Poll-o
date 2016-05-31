@@ -59,7 +59,7 @@ public class Preguntas extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 con++;
-                 guardarRespuestas();
+                guardarRespuestas();
 
                 if(con<preguntas.length) {
                     layun.removeViews(2, nOpciones);
@@ -86,7 +86,7 @@ public class Preguntas extends AppCompatActivity {
         int id = Integer.parseInt(idEncuesta);
         try{
             SQLiteDatabase base = conexion.getWritableDatabase();
-            String SQL = "insert into respuestas(fk_idpregunta, valor) values("+id+",'"+val+"')";
+            String SQL = "insert into rrespuestas(rfk_idpregunta, rvalor) values("+id+",'"+val+"')";
             base.execSQL(SQL);
             Toast.makeText(this,"Respuesta almacenada correctamente",Toast.LENGTH_SHORT).show();
             base.close();
@@ -103,12 +103,12 @@ public class Preguntas extends AppCompatActivity {
                 insertarBD(valores[3],txtRespuesta.getText().toString());
                 break;
             case "opcion":
-                    for(int i =0;i<opcion.length;i++) {
-                        if(opcion[i].isChecked()==true){
-                            //cadRespuestas = cadRespuestas+valores[0]+"-"+opciones[i]+"-"+valores[3]+"/";
-                            insertarBD(valores[3],opciones[i]);
-                        }
+                for(int i =0;i<opcion.length;i++) {
+                    if(opcion[i].isChecked()==true){
+                        //cadRespuestas = cadRespuestas+valores[0]+"-"+opciones[i]+"-"+valores[3]+"/";
+                        insertarBD(valores[3],opciones[i]);
                     }
+                }
 
                 break;
             case "seleccion":
