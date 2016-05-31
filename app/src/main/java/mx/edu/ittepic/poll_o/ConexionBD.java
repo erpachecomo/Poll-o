@@ -73,7 +73,7 @@ public class ConexionBD extends SQLiteOpenHelper{
     public List<String> obtenerPreguntas(int id){
         List<String> labels = new ArrayList<String>();
 
-        String selectQuery = "SELECT  * FROM Pregunta where fk_idencuesta = "+id;
+        String selectQuery = "SELECT  * FROM Pregunta where fk_idencuesta = "+id+" AND tipo != 'abierta'";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
