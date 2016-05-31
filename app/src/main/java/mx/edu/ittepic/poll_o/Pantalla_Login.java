@@ -80,7 +80,7 @@ public class Pantalla_Login extends AppCompatActivity {
 
     public void sesion_correcta(String Respuesta) {
         if(Respuesta.equals("si")){
-            Toast.makeText(Pantalla_Login.this, "Inicio correcto", Toast.LENGTH_LONG).show();
+            //Toast.makeText(Pantalla_Login.this, "Inicio correcto", Toast.LENGTH_LONG).show();
             Intent MenuPrincipal = new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.MenuPrincipal.class);
             MenuPrincipal.putExtra("Usuario", Usuario);
 
@@ -88,7 +88,7 @@ public class Pantalla_Login extends AppCompatActivity {
         }
         if(Respuesta.equals("cliente")){
             ActualizarBaseDeDatos();
-            Toast.makeText(Pantalla_Login.this,"Inicio correcto",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(Pantalla_Login.this,"Inicio correcto",Toast.LENGTH_SHORT).show();
             Intent Encuestas= new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.Encuestas.class);
             Encuestas.putExtra("Usuario",Usuario);
             Encuestas.putExtra("Tipo","1");
@@ -107,7 +107,7 @@ public class Pantalla_Login extends AppCompatActivity {
             web.agregarVariables("celular", Usuario);
             URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
             web.execute(url);
-            Toast.makeText(this, "Encuestas", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Encuestas", Toast.LENGTH_SHORT).show();
 
             base.close();
 
@@ -126,7 +126,7 @@ public class Pantalla_Login extends AppCompatActivity {
             base.execSQL(SQL);
 
             base.close();
-            Toast.makeText(this,"SE INSERTO CORRECTAMENTE",Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,"SE INSERTO CORRECTAMENTE",Toast.LENGTH_LONG).show();
 
         }catch (SQLiteException e){
             AlertDialog.Builder alerta= new AlertDialog.Builder(Pantalla_Login.this);

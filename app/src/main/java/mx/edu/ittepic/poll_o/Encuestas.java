@@ -38,7 +38,7 @@ public class Encuestas extends AppCompatActivity {
         tipo_usuario=Integer.parseInt(getIntent().getStringExtra("Tipo"));
         Usuario_Logeado=getIntent().getStringExtra("Usuario");
         ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
-        Toast.makeText(Encuestas.this, ""+itemsEncuesta.size(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Encuestas.this, ""+itemsEncuesta.size(), Toast.LENGTH_SHORT).show();
         final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
         encuestasdisponibles.setAdapter(Adapter);
 
@@ -87,5 +87,5 @@ public class Encuestas extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         encuestasdisponibles.setAdapter(dataAdapter);
     }
-    
+
 }

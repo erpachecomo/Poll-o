@@ -133,7 +133,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
                             break;
                         case 3:
                             //Tabla Respuestas
-                            SQL = "INSERT INTO Respuestas (idrespuesta,fk_idpregunta,valor) VALUES ('" + columnas[0] + "'," + columnas[1] + ",'" + columnas[2] + "');";
+                            SQL = "INSERT INTO Respuestas (fk_idpregunta,valor) VALUES (" + columnas[1] + ",'" + columnas[2] + "');";
                             break;
                         case 5:
                             //Tabla pregunta

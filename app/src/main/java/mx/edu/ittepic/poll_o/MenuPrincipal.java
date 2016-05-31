@@ -170,6 +170,8 @@ public class MenuPrincipal extends AppCompatActivity {
     }
     public void sesion_cerrada(String Respuesta) {
         if(Respuesta.equals("si")){
+
+
             Toast.makeText(MenuPrincipal.this, "Sesion cerrada", Toast.LENGTH_LONG).show();
             Intent MenuPrincipal = new Intent(MenuPrincipal.this, Pantalla_Login.class);
             startActivity(MenuPrincipal);

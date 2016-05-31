@@ -45,7 +45,7 @@ public class Graficar extends AppCompatActivity {
         String[] arreglo = titulo_encuesta.split("-");
         ide = Integer.parseInt(arreglo[0]);
 
-        Toast.makeText(this,"ID: "+arreglo[0],Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"ID: "+arreglo[0],Toast.LENGTH_LONG).show();
 
         encuesta.setText(titulo_encuesta);
         cargarPreguntasSpinner(ide);
