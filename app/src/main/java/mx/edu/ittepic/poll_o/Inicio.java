@@ -1,8 +1,12 @@
 package mx.edu.ittepic.poll_o;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -20,6 +24,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Inicio extends AppCompatActivity {
 
@@ -29,7 +37,7 @@ public class Inicio extends AppCompatActivity {
     float progreso,tope,aumento;
     Lienzo lienzo;
     /*ACTUALIZAR AUTOMATICAMENTE SI HAY INTERNET*/
-    ConexionBD conexion;
+    ConexionBD bd;
     VerificarConexionWIFI verificadorConexion;
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -41,7 +49,7 @@ public class Inicio extends AppCompatActivity {
         setContentView(lienzo);
         alfa=0;
         /*VARIABLES PARA ACTUALIZAR BASE DE DATOS*/
-        conexion=new ConexionBD(this,"Poll-oB2",null,1);
+        bd=new ConexionBD(this,"Poll-oB2",null,1);
         verificadorConexion=new VerificarConexionWIFI(this);
 
         /*--------------------------------*/
@@ -55,6 +63,75 @@ public class Inicio extends AppCompatActivity {
         logo = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.logosinguino),tamanoPantalla.x / 3,tamanoPantalla.x / 3,false);
         Bitmap letraspollo=BitmapFactory.decodeResource(getResources(), R.drawable.letraspollo);
         letras = Bitmap.createScaledBitmap(letraspollo,letraspollo.getWidth() /3,letraspollo.getHeight()/3,false);
+
+    }
+    void ActualizarBaseDeDatos(){
+        try{
+            /*Actualiza las encuestas*/
+            SQLiteDatabase base = bd.getReadableDatabase();
+            String EliminarDatosEncuesta="DELETE FROM Encuesta";
+            base.execSQL(EliminarDatosEncuesta);
+            ConexionWeb web = new ConexionWeb(Inicio.this);
+            web.agregarVariables("operacion", "get_encuesta");
+            URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
+            web.execute(url);
+            //Toast.makeText(this, "Encuestas", Toast.LENGTH_SHORT).show();
+
+
+            /*Actualiza las Empleado_Encuesta*/
+            web = new ConexionWeb(Inicio.this);
+            String EliminarDatosEmp_enc="DELETE FROM Empleado_Encuesta";
+            base.execSQL(EliminarDatosEmp_enc);
+            web.agregarVariables("operacion", "get_empleado_encuesta");
+            web.agregarVariables("celular", "3112633940");//Aqui se va a pasar el numero de telefono con el que se logio.
+            web.execute(url);
+            //Toast.makeText(this, "Empleado_Encuesta", Toast.LENGTH_SHORT).show();
+
+
+            /*Actualiza las Pregunta*/
+            web = new ConexionWeb(Inicio.this);
+            String EliminarDatosPregunta="DELETE FROM Pregunta";
+            base.execSQL(EliminarDatosPregunta);
+            web.agregarVariables("operacion", "get_pregunta");
+            web.execute(url);
+            //Toast.makeText(this, "Pregunta", Toast.LENGTH_SHORT).show();
+
+
+            /*Actualiza las respuesta*/
+            web = new ConexionWeb(Inicio.this);
+            String EliminarDatosRespuestas="DELETE FROM Respuestas";
+            base.execSQL(EliminarDatosRespuestas);
+            web.agregarVariables("operacion", "get_respuestas");
+            web.execute(url);
+            //Toast.makeText(this, "Respuestas", Toast.LENGTH_SHORT).show();
+
+            base.close();
+
+
+        } catch (MalformedURLException e) {
+            new AlertDialog.Builder(Inicio.this).setMessage
+                    (e.getMessage()).setTitle("Error").show();
+        }
+    }
+    void InsertarEnBaseDeDatos(String SQL){
+        try{
+
+            SQLiteDatabase base = bd.getReadableDatabase();
+
+            /*----------------------------------------------------------------------------------*/
+            base.execSQL(SQL);
+
+            base.close();
+            //Toast.makeText(this,"SE INSERTO CORRECTAMENTE",Toast.LENGTH_LONG).show();
+        }catch (SQLiteException e){
+            AlertDialog.Builder alerta= new AlertDialog.Builder(Inicio.this);
+            alerta.setTitle("ERROR").setMessage(e.getMessage()).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).show();
+        }
 
     }
 
@@ -122,7 +199,14 @@ public class Inicio extends AppCompatActivity {
             puntero=ref;
             sleep=1; //modificar este a 10
         }
+
         public void run(){
+            if(verificadorConexion.estaConectado()) {
+                ActualizarBaseDeDatos();
+            }
+            else{
+                Toast.makeText(Inicio.this, "No tienes conexion a internet", Toast.LENGTH_SHORT).show();
+            }
             Canvas canvas=null;
             while(repetir){
                 if(sleep==1000){
@@ -162,6 +246,7 @@ public class Inicio extends AppCompatActivity {
             }
             puntero.getContext().startActivity(new Intent(Inicio.this,Pantalla_Login.class));
         }
+
     }
 
 }

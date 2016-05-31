@@ -21,8 +21,16 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
     MenuPrincipal form;
     Pantalla_Login form_login;
     Encuestas form_Encuestas;
+    Inicio form_ini;
     int operacion; //0 es cerrar sesion, 1 Actualizar base de datos
 
+    public ConexionWeb(Inicio f){
+        variables = new ArrayList<String[]>();
+        form_login = null;
+        form=null;
+        form_Encuestas=null;
+        form_ini=f;
+    }
     public ConexionWeb(MenuPrincipal f,int n){
         variables = new ArrayList<String[]>();
         form = f;
@@ -112,6 +120,52 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
 
     protected void onPostExecute(String res){
 
+        if(form_ini!=null) {
+            //Toast.makeText(form,res,Toast.LENGTH_SHORT).show();
+            String SQL = "";
+            if (res.contains("=") && res.contains(";")) {
+
+                String[] filas = res.split(";");
+                String[] columnas;
+
+                for (int i = 0; i < filas.length; i++) {
+
+                    columnas = filas[i].split("=");
+                    // Toast.makeText(form, columnas.length + "", Toast.LENGTH_SHORT).show();
+
+
+                    switch (columnas.length) {
+                        case 2:
+                            //Tabla Empleado encuesta
+                            SQL = "INSERT INTO Empleado_Encuesta (fk_celular,fk_idencuesta) VALUES ('" + columnas[0] + "'," + columnas[1] + ");";
+                            break;
+                        case 3:
+                            //Tabla Respuestas
+                            SQL = "INSERT INTO Respuestas (fk_idpregunta,valor) VALUES (" + columnas[1] + ",'" + columnas[2] + "');";
+                            //Toast.makeText(form,SQL,Toast.LENGTH_SHORT).show();
+                            break;
+                        case 5:
+                            //Tabla pregunta
+                            SQL = "INSERT INTO Pregunta (idpregunta,fk_idencuesta,pregunta,tipo,respuestas) VALUES (" + columnas[0] + "," + columnas[1] + ",'" + columnas[2] + "','" + columnas[3] + "','" + columnas[4] + "');";
+                            break;
+                        case 6:
+                            //ENcuestas
+                            SQL = "INSERT INTO Encuesta (idencuesta,compania,nombre,estado,fecha_expiracion, cantidad) VALUES (" + columnas[0] + ",'" + columnas[1] + "'" +
+                                    ",'" + columnas[2] + "','" + columnas[3] + "','" + columnas[4] + "'," + columnas[5] + ");";
+                            break;
+
+                        default:
+                            Toast.makeText(form_ini, "No encontrado: COLUMNAS: "+columnas.length, Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    form_ini.InsertarEnBaseDeDatos(SQL);
+                }
+                //Toast.makeText(form,SQL,Toast.LENGTH_SHORT).show();
+
+            } else {
+
+            }
+        }
         if(form!=null && operacion==1) {
             //Toast.makeText(form,res,Toast.LENGTH_SHORT).show();
             String SQL = "";

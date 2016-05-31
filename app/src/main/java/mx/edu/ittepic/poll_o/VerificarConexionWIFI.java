@@ -20,11 +20,11 @@ public class VerificarConexionWIFI {
         if (activeNetwork != null) { // connected to the internet
             if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
                 // connected to wifi
-                Toast.makeText(ventana, "Tienes conexion a internet con WIFI", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ventana, "Tienes conexion a internet con WIFI", Toast.LENGTH_SHORT).show();
                 return true;
             } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
                 // connected to the mobile provider's data plan
-                Toast.makeText(ventana, "Tienes conexion a internet con DATOS", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ventana, "Tienes conexion a internet con DATOS", Toast.LENGTH_SHORT).show();
                 return true;
             }
         } else {
