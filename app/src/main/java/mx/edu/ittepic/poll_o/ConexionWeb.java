@@ -145,8 +145,9 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
                             SQL = "INSERT INTO Encuesta (idencuesta,compania,nombre,estado,fecha_expiracion, cantidad) VALUES (" + columnas[0] + ",'" + columnas[1] + "'" +
                                     ",'" + columnas[2] + "','" + columnas[3] + "','" + columnas[4] + "'," + columnas[5] + ");";
                             break;
+
                         default:
-                            Toast.makeText(form, "No encontrado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(form, "No encontrado: COLUMNAS: "+columnas.length, Toast.LENGTH_SHORT).show();
                             break;
                     }
                     form.InsertarEnBaseDeDatos(SQL);

@@ -138,8 +138,8 @@ public class ConexionBD extends SQLiteOpenHelper{
 
     public ArrayList<Respuestas> obtenerRespuestas(int id){
         ArrayList<Respuestas> labels = new ArrayList<Respuestas>();
-        String selectQuery = "SELECT valor FROM Respuestas WHERE fk_idpregunta= " + id;
         SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT valor FROM Respuestas WHERE fk_idpregunta= " + id;
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
@@ -154,6 +154,22 @@ public class ConexionBD extends SQLiteOpenHelper{
             } while (cursor.moveToNext());
         }
         cursor.close();
+        String selectQuery1 = "SELECT Rvalor FROM RRespuestas WHERE Rfk_idpregunta= " + id;
+        Cursor cursor2 = db.rawQuery(selectQuery1, null);
+        if (cursor2.moveToFirst()) {
+            do {
+                Respuestas respuestas = new Respuestas();
+                respuestas.setNombre(cursor2.getString(0));
+                String Sql_No_registros = "SELECT COUNT( Rvalor ) AS total FROM RRespuestas  WHERE Rvalor ='" + cursor2.getString(0)+"'";
+                Cursor cursor1 = db.rawQuery(Sql_No_registros, null);
+                cursor1.moveToFirst();
+                int total = cursor1.getInt(cursor1.getColumnIndexOrThrow("total"));
+                respuestas.setValor(total);
+                labels.add(respuestas);
+            } while (cursor.moveToNext());
+        }
+
+        cursor2.close();
         db.close();
 
 
@@ -163,10 +179,13 @@ public class ConexionBD extends SQLiteOpenHelper{
 
     public float getTotalRespuestas(int id) {
         String selectQuery="SELECT COUNT(valor) AS total FROM Respuestas WHERE fk_idpregunta= "+id;
+        String selectQuery1="SELECT COUNT(Rvalor) AS total FROM RRespuestas WHERE Rfk_idpregunta= "+id;
         SQLiteDatabase db =this.getReadableDatabase();
         Cursor cursor= db.rawQuery(selectQuery, null);
+        Cursor cursor1= db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
-        int total = cursor.getInt(cursor.getColumnIndexOrThrow("total"));
+        cursor1.moveToFirst();
+        int total = cursor.getInt(cursor.getColumnIndexOrThrow("total"))+cursor1.getInt(cursor1.getColumnIndexOrThrow("total"));
         cursor.close();
         db.close();
         return total;
