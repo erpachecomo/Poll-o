@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.graphics.SweepGradient;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,10 +30,11 @@ public class Preguntas extends AppCompatActivity {
     RadioButton opcion[];
     TextView encuesta;
     ConexionBD conexion;
-    int con =0;
+    String tipoRespuesta="" ,cadRespuestas="";
+    int con =0, idPregunta=0;
     int nOpciones=0;
-
-    String[] preguntas;
+    String[] opcioncini,valores;
+    String[] preguntas,opciones;
 
     String titulo_encuesta;
     @Override
@@ -57,6 +59,8 @@ public class Preguntas extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 con++;
+                 guardarRespuestas();
+
                 if(con<preguntas.length) {
                     layun.removeViews(2, nOpciones);
                     cargarPreguntas(con);
@@ -68,7 +72,7 @@ public class Preguntas extends AppCompatActivity {
                     alertini.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
+                            finish();
                         }
                     });
                     alertini.show();
@@ -77,23 +81,64 @@ public class Preguntas extends AppCompatActivity {
         });
 
     }
+
+    public void insertarBD(String idEncuesta,String val){
+        int id = Integer.parseInt(idEncuesta);
+        try{
+            SQLiteDatabase base = conexion.getWritableDatabase();
+            String SQL = "insert into respuestas(fk_idpregunta, valor) values("+id+",'"+val+"')";
+            base.execSQL(SQL);
+            Toast.makeText(this,"Respuesta almacenada correctamente",Toast.LENGTH_SHORT).show();
+            base.close();
+        }
+        catch(SQLiteException e){
+            AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+
+            alerta.setTitle("Error").setTitle(e.getMessage()).show();
+        }
+    }
+    public void guardarRespuestas(){
+        switch(tipoRespuesta){
+            case "abierta":
+                insertarBD(valores[3],txtRespuesta.getText().toString());
+                break;
+            case "opcion":
+                    for(int i =0;i<opcion.length;i++) {
+                        if(opcion[i].isChecked()==true){
+                            //cadRespuestas = cadRespuestas+valores[0]+"-"+opciones[i]+"-"+valores[3]+"/";
+                            insertarBD(valores[3],opciones[i]);
+                        }
+                    }
+
+                break;
+            case "seleccion":
+                for(int i =0;i<seleccion.length;i++) {
+                    if(seleccion[i].isChecked()==true){
+                        //cadRespuestas =cadRespuestas +valores[0]+"-"+opcioncini[i]+"-"+valores[3]+"/";
+                        insertarBD(valores[3],opcioncini[i]);
+                    }
+                }
+                break;
+        }
+    }
+
     public  void  cargarOpciones(String tipo,String opc){
 
         switch(tipo){
             case "abierta":
+
                 nOpciones =1;
                 txtRespuesta = new EditText(this);
                 layun.addView(txtRespuesta);
+                tipoRespuesta = "abierta";
 
                 break;
             case "opcion":
-                String[] opciones = opc.split(",");
 
+                opciones = opc.split(",");
                 opcion = new RadioButton[opciones.length];
                 RadioGroup rg = new RadioGroup(this);
                 rg.setOrientation(RadioGroup.VERTICAL);
-
-
                 for(int i =0;i<opcion.length;i++) {
                     opcion[i] = new RadioButton(this);
                     opcion[i].setText(opciones[i]);
@@ -101,46 +146,50 @@ public class Preguntas extends AppCompatActivity {
                 }
                 nOpciones = 1;
                 layun.addView(rg);
+                tipoRespuesta = "opcion";
                 break;
             case "seleccion":
-                String[] opcioncini = opc.split(",");
+                opcioncini = opc.split(",");
                 seleccion = new CheckBox[opcioncini.length];
                 nOpciones = opcioncini.length;
                 for(int i =0;i<seleccion.length;i++) {
                     seleccion[i] = new CheckBox(this);
                     seleccion[i].setText(opcioncini[i]);
                     layun.addView(seleccion[i]);
+                    tipoRespuesta = "seleccion";
                 }
                 break;
-
         }
-
-
-
-
     }
     public void cargarPreguntas(int n){
-        String[] valores = preguntas[n].split("-");
+        valores = preguntas[n].split("-");
         encuesta.setText(valores[0]);
         cargarOpciones(valores[1],valores[2]);
     }
 
-    public void consultaPreguntas(int id){
-        String reg="";
-        SQLiteDatabase base = conexion.getReadableDatabase();
-        String SQL = "Select*from Pregunta where fk_idencuesta = "+id;
-        Cursor res = base.rawQuery(SQL,null);
+    public void consultaPreguntas(int id) {
+        try {
+            String reg = "";
+            SQLiteDatabase base = conexion.getReadableDatabase();
+            String SQL = "Select*from Pregunta where fk_idencuesta = " + id;
+            Cursor res = base.rawQuery(SQL, null);
 
-        if (res.moveToFirst()){
-           do {
-                reg = reg+res.getString(2) + "-" + res.getString(3) + "-" + res.getString(4)+"-o-";
-            }while(res.moveToNext());
-             preguntas = reg.split("-o-");
-        }
-        else{
-            Toast.makeText(this, "No se encontraron resultados", Toast.LENGTH_LONG).show();
-        }
+            if (res.moveToFirst()) {
+                do {
+                    reg = reg + res.getString(2) + "-" + res.getString(3) + "-" + res.getString(4) + "-" + res.getString(0) + "-o-";
+                } while (res.moveToNext());
+                preguntas = reg.split("-o-");
+                //  Toast.makeText(this,reg,Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "No se encontraron resultados", Toast.LENGTH_LONG).show();
+            }
 
-        base.close();
+            base.close();
+        }
+        catch (SQLiteException e) {
+            AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+            alerta.setTitle("Error").setTitle(e.getMessage()).show();
+        }
     }
+
 }
