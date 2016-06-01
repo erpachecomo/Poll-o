@@ -151,6 +151,9 @@ public class Pantalla_Login extends AppCompatActivity {
             startActivity(Encuestas);
             super.onResume();
         }
+        if(!Respuesta.equals("si") || !Respuesta.equals("cliente")){
+            Toast.makeText(Pantalla_Login.this, "Servidor fallo", Toast.LENGTH_LONG).show();
+        }
     }
     void ActualizarBaseDeDatos(){
         try{
