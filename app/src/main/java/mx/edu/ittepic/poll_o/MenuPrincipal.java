@@ -90,7 +90,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
             base.close();
 
-
+            Toast.makeText(this, "Actualizado correctamente", Toast.LENGTH_SHORT).show();
         } catch (MalformedURLException e) {
             new AlertDialog.Builder(MenuPrincipal.this).setMessage
                     (e.getMessage()).setTitle("Error").show();
@@ -197,11 +197,18 @@ public class MenuPrincipal extends AppCompatActivity {
     }
     @Override protected void onStop() {
         super.onStop();
-        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+        if (verificadorConexion.estaConectado()) {
+            //CODIGO LOGEARTE CON INTERNET
+            Cerrar_Sesion(usuario_logeado);
+
+        } else {
+            //AQUI DEBE IR EL CODIGO PARA MANDAR UN MJS AL SERVIDOR SI NO HAY INTERNET
+        }
     }
 }

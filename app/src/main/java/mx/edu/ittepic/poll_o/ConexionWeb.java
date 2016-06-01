@@ -56,6 +56,14 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
         form=null;
         form_Encuestas=f;
     }
+    public ConexionWeb(Encuestas f, int valor){
+        variables = new ArrayList<String[]>();
+        form_login = null;
+        error = true;
+        form=null;
+        form_Encuestas=f;
+        operacion=valor;
+    }
     public void agregarVariables(String id, String dato){
         String[] temp = {id, dato};
         variables.add(temp);
@@ -237,9 +245,14 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
             //Toast.makeText(form_login,res,Toast.LENGTH_SHORT).show();
             form_login.sesion_correcta(res);
         }
-        if (form_Encuestas!=null){
+        if (form_Encuestas!=null && operacion!=1){
             //Toast.makeText(form_login,res,Toast.LENGTH_SHORT).show();
             form_Encuestas.mostrarREspuesta(res);
+        }
+        if (form_Encuestas!=null && operacion==1){
+            //Toast.makeText(form_login,res,Toast.LENGTH_SHORT).show();
+            form_Encuestas.sesion_cerrada(res);
+
         }
         if (form_login!=null && operacion==1){
             //Toast.makeText(form_login,res,Toast.LENGTH_SHORT).show();
@@ -264,7 +277,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
                     }
                     form_login.InsertarEnBaseDeDatos(SQL);
                 }
-                Toast.makeText(form_login,SQL,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(form_login,SQL,Toast.LENGTH_SHORT).show();
 
             } else {
 
