@@ -117,6 +117,7 @@ public class Encuestas extends AppCompatActivity {
                 ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
                 final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
                 encuestasdisponibles.setAdapter(Adapter);
+
                 break;
 
             default:
