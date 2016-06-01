@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="mx.edu.ittepic.poll_o.MenuPrincipal"
-    android:background="@drawable/background">
+    android:background="@drawable/barra">
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -16,10 +16,10 @@
         android:id="@+id/salir"
         android:src="@drawable/salir"
         android:background="#00ffffff"
-        android:layout_alignTop="@+id/realizar_encuesta"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="Cambiar_Salir" />
+        android:onClick="Cambiar_Salir"
+        android:layout_below="@+id/Botton_actualizar"
+        android:layout_alignLeft="@+id/acerca_de"
+        android:layout_alignStart="@+id/acerca_de" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -28,10 +28,9 @@
         android:src="@drawable/realizar_encuesta"
         android:background="#00ffffff"
         android:onClick="Cambiar_Encuestas"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="123dp" />
+        android:layout_above="@+id/acerca_de"
+        android:layout_alignLeft="@+id/acerca_de"
+        android:layout_alignStart="@+id/acerca_de" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -39,10 +38,12 @@
         android:id="@+id/acerca_de"
         android:src="@drawable/acerca_de"
         android:background="#00b36a6a"
-        android:layout_below="@+id/salir"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp"
-        android:onClick="Cambiar_Acerca" />
+        android:onClick="Cambiar_Acerca"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="176dp"
+        android:layout_marginEnd="176dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -50,8 +51,8 @@
         android:id="@+id/Botton_actualizar"
         android:src="@drawable/refresh"
         android:background="#00ffffff"
+        android:onClick="Actualizar"
         android:layout_below="@+id/acerca_de"
-        android:layout_alignRight="@+id/salir"
-        android:layout_alignEnd="@+id/salir"
-        android:onClick="Actualizar" />
+        android:layout_alignLeft="@+id/acerca_de"
+        android:layout_alignStart="@+id/acerca_de" />
 </RelativeLayout>

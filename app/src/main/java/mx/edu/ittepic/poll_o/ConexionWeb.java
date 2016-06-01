@@ -90,6 +90,8 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
             out.close();
 
             if(conexion.getResponseCode()==200){ //Si el recibio los datos enviados y proceso respuesta
+                //Toast.makeText(ConexionWeb.this,"Entro al gerResponse",Toast.LENGTH_LONG).show();
+                //respuesta ="entro a esa wea";
 
                 InputStreamReader in = new InputStreamReader(conexion.getInputStream(), "UTF-8");
                 BufferedReader lector = new BufferedReader(in);
@@ -110,7 +112,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
             return "Error_404_1";
             //publishProgress("Error:"+uhe.getMessage());
         }catch(IOException ioe){
-            return "Error_404_2";
+            return "Error_404_2 "+ioe.getMessage();
             //publishProgress("Error:"+ioe.getMessage());
         }finally {
             if(conexion!=null){
@@ -234,6 +236,10 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
         if (form_login!=null && operacion==0){
             //Toast.makeText(form_login,res,Toast.LENGTH_SHORT).show();
             form_login.sesion_correcta(res);
+        }
+        if (form_Encuestas!=null){
+            //Toast.makeText(form_login,res,Toast.LENGTH_SHORT).show();
+            form_Encuestas.mostrarREspuesta(res);
         }
         if (form_login!=null && operacion==1){
             //Toast.makeText(form_login,res,Toast.LENGTH_SHORT).show();

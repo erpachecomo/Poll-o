@@ -30,6 +30,7 @@ public class Encuestas extends AppCompatActivity {
     ConexionBD conexion;
     int tipo_usuario;//Variable para saber que tipo de usuario es
     String Usuario_Logeado;
+    String[] respuestas;
     String reg="";
     //ConexionBD bd;
     @Override
@@ -54,16 +55,17 @@ public class Encuestas extends AppCompatActivity {
             @Override
 
             public void onClick(View v) {
-               try{
-                    cw = new ConexionWeb(Encuestas.this);
-                   Toast.makeText(Encuestas.this,reg,Toast.LENGTH_LONG).show();
-                    cw.agregarVariables("respuestas",reg);
-                    cw.agregarVariables("operacion", "subir_todas_respuestas");
+              try{
 
-                   URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
-                   cw.execute(url);
-
-
+                  for(int i = 0; i<respuestas.length;i++) {
+                      cw = new ConexionWeb(Encuestas.this);
+                      respuestas = reg.split("-o-");
+                      cw.agregarVariables("respuestas", respuestas[i]);
+                      cw.agregarVariables("operacion", "subir_todas_respuestas");
+                      URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
+                      cw.execute(url);
+                      //Toast.makeText(Encuestas.this,"xfsdfsdf: "+respuestas[0],Toast.LENGTH_LONG).show();
+                  }
                 }
                 catch (MalformedURLException e){
                     AlertDialog.Builder alertaMesta = new  AlertDialog.Builder(Encuestas.this);
@@ -120,10 +122,11 @@ public class Encuestas extends AppCompatActivity {
 
             if (res.moveToFirst()) {
                 do {
-                    reg = reg + res.getString(1) + "|" + res.getString(2)+ "%%";
+                    reg = reg +"("+res.getString(1) + ",'" + res.getString(2)+"')-o-";
                 } while (res.moveToNext());
-               // respuestas = reg.split("-o-");
-                  reg=reg.substring(0,reg.length()-1);
+                respuestas = reg.split("-o-");
+                //Toast.makeText(this,reg,Toast.LENGTH_LONG).show();
+
 
 
             } else {
@@ -139,11 +142,11 @@ public class Encuestas extends AppCompatActivity {
     }
     public  void mostrarREspuesta(String res){
         Toast.makeText(Encuestas.this,res, Toast.LENGTH_LONG).show();
-            if (res.equals("si")) {
-                //Toast.makeText(Encuestas.this, "Almacenado en servidor exitosamente", Toast.LENGTH_LONG).show();
+            if (res.contains("si")) {
+                Toast.makeText(Encuestas.this, "Almacenado en servidor exitosamente", Toast.LENGTH_LONG).show();
                 eliminarRespuestas();
             }
-            if (res.equals("no")) {
+            if (res.contains("no")) {
                 //Toast.makeText(Encuestas.this, "No se pudo almacenar en servidor", Toast.LENGTH_LONG).show();
             }
     }
@@ -159,6 +162,29 @@ public class Encuestas extends AppCompatActivity {
             AlertDialog.Builder alerta = new AlertDialog.Builder(this);
             alerta.setTitle("Error").setTitle(e.getMessage()).show();
         }
+    }
+
+    public void mostrar(String resultado){
+
+        Toast.makeText(this,resultado,Toast.LENGTH_LONG).show();
+
+        if(resultado.startsWith("Error_404_1")){
+            resultado="Hosting no encontrado";
+        }
+        if(resultado.startsWith("Error_404_2")){
+            resultado="Error al ENVIAR/RECIBIR informacion con el PHP";
+        }
+        if(resultado.startsWith("Error_404")){
+            resultado="Al parecer no existe el PHP buscado";
+        }
+
+        if(resultado.equals("si")){
+            Toast.makeText(this,"Si se pudo",Toast.LENGTH_LONG).show();
+        }
+        if(resultado.equals("no")){
+            Toast.makeText(this,"No se pudo",Toast.LENGTH_LONG).show();
+        }
+        Toast.makeText(this,resultado,Toast.LENGTH_LONG).show();
     }
     private void cargarEncuestas() {
 
