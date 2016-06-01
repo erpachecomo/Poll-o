@@ -47,6 +47,7 @@ public class MenuPrincipal extends AppCompatActivity {
             Toast.makeText(this,"No tienes conexion a internet",Toast.LENGTH_SHORT).show();
         }
     }
+    //Comentario de prueba
     void ActualizarBaseDeDatos(){
         try{
             /*Actualiza las encuestas*/
