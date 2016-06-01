@@ -331,12 +331,12 @@ public class MenuPrincipal extends AppCompatActivity {
                 try {
                         SQLiteDatabase base = bd.getReadableDatabase();
                        //String query = "select* from Pedido";
-                                String query2 = "select E.compania, P.Pregunta, R.rvalor " +
+                                String query2 = "select E.compania, P.Pregunta, R.valor " +
                                         "from Encuesta E " +
                                         "inner join Pregunta P " +
                                         "on (E.idEncuesta = P.fk_idEncuesta ) " +
-                                        "inner join RRespuestas R " +
-                                        "on(P.idPregunta = R.rfk_idPregunta)";
+                                        "inner join Respuestas R " +
+                                        "on(P.idPregunta = R.fk_idPregunta)";
                         //Cursor res = base.rawQuery(query, null);
                                 Cursor res2 = base.rawQuery(query2, null);
                         if (res2.moveToFirst()) {
