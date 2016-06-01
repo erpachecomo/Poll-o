@@ -20,6 +20,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
     List<String[]> variables;
     MenuPrincipal form;
     Pantalla_Login form_login;
+    boolean error;
     Encuestas form_Encuestas;
     Inicio form_ini;
     int operacion; //0 es cerrar sesion, 1 Actualizar base de datos
@@ -28,6 +29,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
         variables = new ArrayList<String[]>();
         form_login = null;
         form=null;
+        error = true;
         form_Encuestas=null;
         form_ini=f;
     }
@@ -36,18 +38,21 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
         form = f;
         operacion=n;
         form_login=null;
+        error = true;
         form_Encuestas=null;
     }
     public ConexionWeb(Pantalla_Login f,int operac){
         variables = new ArrayList<String[]>();
         operacion=operac;
         form_login = f;
+        error = true;
         form=null;
         form_Encuestas=null;
     }
     public ConexionWeb(Encuestas f){
         variables = new ArrayList<String[]>();
         form_login = null;
+        error = true;
         form=null;
         form_Encuestas=f;
     }
@@ -155,12 +160,18 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
                             break;
 
                         default:
-                            Toast.makeText(form_ini, "No encontrado: COLUMNAS: "+columnas.length, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(form_ini, "No encontrado: COLUMNAS: "+columnas.length, Toast.LENGTH_SHORT).show();
+                            error = false;
                             break;
                     }
-                    form_ini.InsertarEnBaseDeDatos(SQL);
+                    if(error){
+                        form_ini.InsertarEnBaseDeDatos(SQL);
+                    }
+
+
                 }
                 //Toast.makeText(form,SQL,Toast.LENGTH_SHORT).show();
+
 
             } else {
 
@@ -201,10 +212,14 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
                             break;
 
                         default:
-                            Toast.makeText(form, "No encontrado: COLUMNAS: "+columnas.length, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(form, "No encontrado: COLUMNAS: "+columnas.length, Toast.LENGTH_SHORT).show();
+                            error=false;
                             break;
                     }
-                    form.InsertarEnBaseDeDatos(SQL);
+                    if(error){
+                        form.InsertarEnBaseDeDatos(SQL);
+                    }
+
                 }
                 //Toast.makeText(form,SQL,Toast.LENGTH_SHORT).show();
 

@@ -12,7 +12,7 @@ import android.widget.Toast;
 public class MenuEncuesta extends AppCompatActivity {
     String encuesta_a_Realizar;
     TextView Encuesta;
-    Button Realizar_encuesta,Graficar;
+    Button Realizar_encuesta,Graficar,subirServer;
 
 
 
@@ -25,6 +25,7 @@ public class MenuEncuesta extends AppCompatActivity {
         Encuesta=(TextView)findViewById(R.id.Encuesta_a_Realizar);
         Realizar_encuesta= (Button)findViewById(R.id.RealizarEncuesta);
         Graficar=(Button)findViewById(R.id.Graficar_Resultados);
+
 
         Encuesta.setText(encuesta_a_Realizar);
 
@@ -46,6 +47,7 @@ public class MenuEncuesta extends AppCompatActivity {
                 startActivity(PantallaPreguntas);
             }
         });
+
     }
 
 

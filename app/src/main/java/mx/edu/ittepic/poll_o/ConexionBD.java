@@ -38,14 +38,14 @@ public class ConexionBD extends SQLiteOpenHelper{
                 "   FOREIGN KEY (fk_idencuesta) REFERENCES Encuesta (idencuesta) )");
 
 
-        sql.execSQL("CREATE TABLE Respuestas (idrespuesta INTEGER PRIMARY KEY AUTOINCREMENT,fk_idpregunta INTEGER,valor VARCHAR (10000)," +
+        sql.execSQL("CREATE TABLE Respuestas (idrespuesta INTEGER ,fk_idpregunta INTEGER,valor VARCHAR (10000)," +
                 "   FOREIGN KEY (fk_idpregunta) REFERENCES Pregunta (idpregunta) )");
 
-        sql.execSQL("CREATE TABLE RRespuestas (Ridrespuesta INTEGER PRIMARY KEY AUTOINCREMENT,Rfk_idpregunta INTEGER,Rvalor VARCHAR (10000)," +
+        sql.execSQL("CREATE TABLE RRespuestas (Ridrespuesta INTEGER,Rfk_idpregunta INTEGER,Rvalor VARCHAR (10000)," +
                 "   FOREIGN KEY (Rfk_idpregunta) REFERENCES Pregunta (idpregunta) )");
         //Usuarios
 
-        sql.execSQL("delete from respuestas ");
+        //sql.execSQL("delete from respuestas ");
 
         //sql.execSQL("insert into usuario values('3111126818','Armando','encuestador','Calle Falsa #123','hola123')");
         //sql.execSQL("insert into usuario values('3111234567','Paloma','encuestador','Calle Libano #507','hola123')");

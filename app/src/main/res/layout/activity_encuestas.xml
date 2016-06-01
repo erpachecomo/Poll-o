@@ -32,6 +32,13 @@
         android:id="@+id/searchView"
         android:layout_gravity="right" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Subir respuestas a servidor"
+        android:layout_marginTop="10dp"
+        android:id="@+id/subirServer" />
+
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

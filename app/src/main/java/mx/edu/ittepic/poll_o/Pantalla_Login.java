@@ -107,7 +107,8 @@ public class Pantalla_Login extends AppCompatActivity {
                     //super.onResume();
                 }
             }
-                Toast.makeText(Pantalla_Login.this, "Celular"+mensaje.getDisplayOriginatingAddress()+"Mensaje"+mensaje.getMessageBody(), Toast.LENGTH_SHORT).show();
+         //       Toast.makeText(Pantalla_Login.this, "Celular"+mensaje.getDisplayOriginatingAddress()+"Mensaje"+mensaje.getMessageBody(), Toast.LENGTH_SHORT).show();
+
             }
         };
         registerReceiver(recibidorMensajesSMS, evento);
@@ -136,13 +137,13 @@ public class Pantalla_Login extends AppCompatActivity {
     }
 
     public void sesion_correcta(String Respuesta) {
-        if(Respuesta.equals("si")){
+        if(Respuesta.contains("si")){
             //Toast.makeText(Pantalla_Login.this, "Inicio correcto", Toast.LENGTH_LONG).show();
             Intent MenuPrincipal = new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.MenuPrincipal.class);
             MenuPrincipal.putExtra("Usuario", Usuario);
             startActivity(MenuPrincipal);
         }
-        if(Respuesta.equals("cliente")){
+        if(Respuesta.contains("cliente")){
             ActualizarBaseDeDatos();
             //Toast.makeText(Pantalla_Login.this,"Inicio correcto",Toast.LENGTH_SHORT).show();
             Intent Encuestas= new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.Encuestas.class);
