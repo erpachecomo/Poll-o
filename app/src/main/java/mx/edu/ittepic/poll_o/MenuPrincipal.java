@@ -11,6 +11,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
+import android.widget.Button;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -23,25 +28,60 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MenuPrincipal extends AppCompatActivity {
-    ImageButton AcercaDe,Encuestas,Salir,actualizar;
+    ImageButton AcercaDe, Encuestas, Salir, actualizar;
+    ImageButton btnCrearTxt;
     VerificarConexionWIFI verificadorConexion;
     ConexionBD bd;
-    String usuario_logeado;
+    String usuario_logeado, reg;
     BroadcastReceiver recibidorMensajesSMS;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal);
-        Salir=(ImageButton)findViewById(R.id.salir);
-        Encuestas=(ImageButton)findViewById(R.id.realizar_encuesta);
-        AcercaDe=(ImageButton)findViewById(R.id.acerca_de);
-        actualizar=(ImageButton)findViewById(R.id.Botton_actualizar);
-        verificadorConexion=new VerificarConexionWIFI(this);
-        usuario_logeado=getIntent().getStringExtra("Usuario");
-        bd=new ConexionBD(this,"Poll-oB2",null,1);
-        if(verificadorConexion.estaConectado()) {
-        ActualizarBaseDeDatos2();
+        Salir = (ImageButton) findViewById(R.id.salir);
+        Encuestas = (ImageButton) findViewById(R.id.realizar_encuesta);
+        AcercaDe = (ImageButton) findViewById(R.id.acerca_de);
+        btnCrearTxt = (ImageButton) findViewById(R.id.crearTxt);
+        actualizar = (ImageButton) findViewById(R.id.Botton_actualizar);
+        verificadorConexion = new VerificarConexionWIFI(this);
+        usuario_logeado = getIntent().getStringExtra("Usuario");
+
+        bd = new ConexionBD(this, "Poll-oB2", null, 1);
+
+        btnCrearTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Environment.getExternalStorageState().equals((Environment.MEDIA_MOUNTED))) {
+                    //SI ESTA PRESENTE LA MICRO SD
+                    try {
+                        File tarjeta = Environment.getExternalStorageDirectory();
+                        File carpeta = new File(tarjeta.getAbsolutePath(), "Poll-o");
+                        if (!carpeta.exists()) {
+                            carpeta.mkdir();
+                        }
+                        //File directorioAplicacion = getExternalFilesDir("TPDM");
+                        //Con variante de vector de files
+                        File datosArchivo = new File(carpeta.getAbsolutePath(), "encuestas.txt");
+                        OutputStreamWriter archivo = new OutputStreamWriter(new FileOutputStream(datosArchivo));
+                        archivo.write(consultaBD());
+                        archivo.close();
+                        Toast.makeText(MenuPrincipal.this, "Se guardo correctamente", Toast.LENGTH_LONG).show();
+                    }//TRY
+                    catch (Exception ex) {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(MenuPrincipal.this);
+                        alert.setTitle("Error").setMessage(ex.getMessage()).show();
+                    }//CATCH
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MenuPrincipal.this);
+                    alert.setTitle("Error").setMessage("No hay tarjeta SD Montada/Insertada!").show();
+                }
+            }
+                     });
+
+               if (verificadorConexion.estaConectado()) {
+           ActualizarBaseDeDatos2();
         }
+
         IntentFilter evento = new IntentFilter("android.provider.Telephony.SMS_RECEIVED"); //Cuando entre un mensaje nuevo;
         recibidorMensajesSMS = new BroadcastReceiver() {
             @Override
@@ -260,4 +300,60 @@ public class MenuPrincipal extends AppCompatActivity {
             //AQUI DEBE IR EL CODIGO PARA MANDAR UN MJS AL SERVIDOR SI NO HAY INTERNET
         }
     }
+    public void consultaRespuestas() {
+                try {
+
+                                SQLiteDatabase base = bd.getReadableDatabase();
+                        String SQL = "Select*from rrespuestas";
+                        Cursor res = base.rawQuery(SQL, null);
+
+                                if (res.moveToFirst()) {
+                                do {
+                                       reg = reg + "(" + res.getString(1) + ",'" + res.getString(2) + "')-o-";
+                } while (res.moveToNext());
+                                //respuestas = reg.split("-o-");
+                                       //Toast.makeText(this,reg,Toast.LENGTH_LONG).show();
+
+
+                                                           } else {
+                                Toast.makeText(this, "No se encontraron resultados", Toast.LENGTH_LONG).show();
+                            }
+
+                                base.close();
+                    } catch (SQLiteException e) {
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+                        alerta.setTitle("Error").setTitle(e.getMessage()).show();
+                    }
+            }
+
+    public String consultaBD() {
+                String reg = "";
+                try {
+                        SQLiteDatabase base = bd.getReadableDatabase();
+                       //String query = "select* from Pedido";
+                                String query2 = "select E.compania, P.Pregunta, R.rvalor " +
+                                        "from Encuesta E " +
+                                        "inner join Pregunta P " +
+                                        "on (E.idEncuesta = P.fk_idEncuesta ) " +
+                                        "inner join RRespuestas R " +
+                                        "on(P.idPregunta = R.rfk_idPregunta)";
+                        //Cursor res = base.rawQuery(query, null);
+                                Cursor res2 = base.rawQuery(query2, null);
+                        if (res2.moveToFirst()) {
+                                do {
+                                        reg = reg + res2.getString(0) + "," + res2.getString(1) + "," +res2.getString(2)+ "\n";
+                                   } while (res2.moveToNext());
+                            } else {
+                              Toast.makeText(this, "No se encontraron resultados", Toast.LENGTH_LONG).show();
+                           }
+                        base.close();
+
+
+                                    } catch (SQLiteException e) {
+                        AlertDialog.Builder alertini = new AlertDialog.Builder(this);
+                        alertini.setTitle("Error!").setMessage(e.getMessage()).show();
+                    }
+              return reg;
+          }
+
 }
