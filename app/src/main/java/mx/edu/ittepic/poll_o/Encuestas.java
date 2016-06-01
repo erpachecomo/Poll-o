@@ -52,7 +52,12 @@ public class Encuestas extends AppCompatActivity {
         ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
         final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
         encuestasdisponibles.setAdapter(Adapter);
-
+        if(tipo_usuario==1){
+            btnSubirServer.setVisibility(View.INVISIBLE);
+        }
+        else{
+            btnSubirServer.setVisibility(View.VISIBLE);
+        }
         btnSubirServer.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -89,6 +94,7 @@ public class Encuestas extends AppCompatActivity {
 
                 Intent PantallaMenuEncuesta = new Intent(Encuestas.this, MenuEncuesta.class);
                 PantallaMenuEncuesta.putExtra("seleccion",encuesta_seleccionada);
+                PantallaMenuEncuesta.putExtra("tipo",tipo_usuario+"");
                 startActivity(PantallaMenuEncuesta);
 
             }
