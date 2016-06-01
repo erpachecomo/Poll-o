@@ -92,19 +92,11 @@ public class Pantalla_Login extends AppCompatActivity {
                 Object mensajeObjeto[] = (Object[]) b.get("pdus");//Esto es obtener el mensaje entrante.
 
                 SmsMessage mensaje = SmsMessage.createFromPdu((byte[])mensajeObjeto[0]);//),"UTF-8");
-                if(mensaje.getDisplayOriginatingAddress().equals("3111349397")){
+                if(mensaje.getDisplayOriginatingAddress().equals("3112633940")){
                 if(mensaje.getMessageBody().contains("si")){
                     Intent MenuPrincipal = new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.MenuPrincipal.class);
                     MenuPrincipal.putExtra("Usuario", Usuario);
                     startActivity(MenuPrincipal);
-                }if(mensaje.getMessageBody().contains("cliente")){
-                    //ActualizarBaseDeDatos();
-                    //Toast.makeText(Pantalla_Login.this,"Inicio correcto",Toast.LENGTH_SHORT).show();
-                    Intent Encuestas= new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.Encuestas.class);
-                    Encuestas.putExtra("Usuario",Usuario);
-                    Encuestas.putExtra("Tipo","1");
-                    startActivity(Encuestas);
-                    //super.onResume();
                 }
             }
          //       Toast.makeText(Pantalla_Login.this, "Celular"+mensaje.getDisplayOriginatingAddress()+"Mensaje"+mensaje.getMessageBody(), Toast.LENGTH_SHORT).show();
@@ -115,7 +107,7 @@ public class Pantalla_Login extends AppCompatActivity {
     }
     private void IniciarSesionSMS(String usuario, String contrasena) {
         SmsManager smsManager = SmsManager.getDefault();
-        smsManager.sendTextMessage("3111349397", null, "Poll-o,"+usuario+","+contrasena, null, null);//telefono, provedor de servicios,Activity de envio:Cuando lo envía manda a llamr a un activity, Activity de recepcion:cuando llega el sms
+        smsManager.sendTextMessage("3112633940", null, "Poll-o,login,"+usuario+","+contrasena, null, null);//telefono, provedor de servicios,Activity de envio:Cuando lo envía manda a llamr a un activity, Activity de recepcion:cuando llega el sms
         Toast.makeText(Pantalla_Login.this, "Iniciando sesión vía SMS", Toast.LENGTH_SHORT).show();
     }
     private void IniciarSesion(String usuario, String contrasena) {
