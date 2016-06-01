@@ -44,10 +44,10 @@ public class Encuestas extends AppCompatActivity {
         //bd=new ConexionBD(this,"Poll-oB2",null,1);
         tipo_usuario=Integer.parseInt(getIntent().getStringExtra("Tipo"));
         Usuario_Logeado=getIntent().getStringExtra("Usuario");
-        ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
+
         //Toast.makeText(Encuestas.this, ""+itemsEncuesta.size(), Toast.LENGTH_SHORT).show();
         consultaRespuestas();
-
+        ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
         final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
         encuestasdisponibles.setAdapter(Adapter);
 
@@ -98,6 +98,13 @@ public class Encuestas extends AppCompatActivity {
         Toast.makeText(Encuestas.this, lables.size()+" ", Toast.LENGTH_SHORT).show();
         return lables;
     }
+    @Override protected void onStart() {
+        super.onStart();
+        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+        ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
+        final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
+        encuestasdisponibles.setAdapter(Adapter);
+    }
     public boolean onCreateOptionsMenu(Menu m){
         //cuando se crea el menu contextual
         this.getMenuInflater().inflate(R.menu.menu_login, m);
@@ -107,7 +114,9 @@ public class Encuestas extends AppCompatActivity {
         //se ejecuta cuanso se toca on item del menu conceptual
         switch (mi.getItemId()){
             case R.id.actualiza:
-
+                ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
+                final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
+                encuestasdisponibles.setAdapter(Adapter);
                 break;
 
             default:

@@ -195,4 +195,13 @@ public class MenuPrincipal extends AppCompatActivity {
         paginaEncuestas.putExtra("Tipo","0");
         startActivity(paginaEncuestas);
     }
+    @Override protected void onStop() {
+        super.onStop();
+        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+    }
 }

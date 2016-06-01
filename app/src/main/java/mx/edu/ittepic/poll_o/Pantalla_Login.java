@@ -102,9 +102,8 @@ public class Pantalla_Login extends AppCompatActivity {
                     //Toast.makeText(Pantalla_Login.this,"Inicio correcto",Toast.LENGTH_SHORT).show();
                     Intent Encuestas= new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.Encuestas.class);
                     Encuestas.putExtra("Usuario",Usuario);
-                    Encuestas.putExtra("Tipo","1");
+                    Encuestas.putExtra("Tipo", "1");
                     startActivity(Encuestas);
-                    //super.onResume();
                 }
             }
          //       Toast.makeText(Pantalla_Login.this, "Celular"+mensaje.getDisplayOriginatingAddress()+"Mensaje"+mensaje.getMessageBody(), Toast.LENGTH_SHORT).show();
@@ -148,13 +147,17 @@ public class Pantalla_Login extends AppCompatActivity {
             //Toast.makeText(Pantalla_Login.this,"Inicio correcto",Toast.LENGTH_SHORT).show();
             Intent Encuestas= new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.Encuestas.class);
             Encuestas.putExtra("Usuario",Usuario);
-            Encuestas.putExtra("Tipo","1");
+            Encuestas.putExtra("Tipo", "1");
             startActivity(Encuestas);
-            super.onResume();
         }
         if(!Respuesta.contains("si") && !Respuesta.contains("cliente")){
             Toast.makeText(Pantalla_Login.this, "Servidor fallo", Toast.LENGTH_LONG).show();
         }
+    }
+    @Override protected void onPause() {
+        Toast.makeText(this, "Cliente: "+Usuario, Toast.LENGTH_SHORT).show();
+        ActualizarBaseDeDatos();
+        super.onPause();
     }
     void ActualizarBaseDeDatos(){
         try{

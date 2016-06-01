@@ -264,7 +264,7 @@ public class ConexionWeb extends AsyncTask<URL,String,String> {
                     }
                     form_login.InsertarEnBaseDeDatos(SQL);
                 }
-                //Toast.makeText(form,SQL,Toast.LENGTH_SHORT).show();
+                Toast.makeText(form_login,SQL,Toast.LENGTH_SHORT).show();
 
             } else {
 
