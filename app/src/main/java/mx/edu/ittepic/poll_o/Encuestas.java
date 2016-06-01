@@ -95,6 +95,7 @@ public class Encuestas extends AppCompatActivity {
     };
     private ArrayList<Encuesta_detalle> obtenerItems() {
         ArrayList<Encuesta_detalle> lables=conexion.obtenerEnc();
+        Toast.makeText(Encuestas.this, lables.size()+" ", Toast.LENGTH_SHORT).show();
         return lables;
     }
     public boolean onCreateOptionsMenu(Menu m){
