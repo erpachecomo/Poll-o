@@ -34,7 +34,9 @@ public class MenuPrincipal extends AppCompatActivity {
         verificadorConexion=new VerificarConexionWIFI(this);
         usuario_logeado=getIntent().getStringExtra("Usuario");
         bd=new ConexionBD(this,"Poll-oB2",null,1);
+        if(verificadorConexion.estaConectado()) {
         ActualizarBaseDeDatos2();
+        }
     }
     /*APARTADO PARA ACTUALIZAR COMPLETAMENTE LA BASE DE DATOS BAJANDO LOS DATOS DEL SERVIDOR*/
     public void Actualizar(View v){

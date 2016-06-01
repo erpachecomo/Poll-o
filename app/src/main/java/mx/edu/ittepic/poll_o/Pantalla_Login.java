@@ -98,7 +98,7 @@ public class Pantalla_Login extends AppCompatActivity {
                     MenuPrincipal.putExtra("Usuario", Usuario);
                     startActivity(MenuPrincipal);
                 }if(mensaje.getMessageBody().equals("cliente")){
-                    ActualizarBaseDeDatos();
+                    //ActualizarBaseDeDatos();
                     //Toast.makeText(Pantalla_Login.this,"Inicio correcto",Toast.LENGTH_SHORT).show();
                     Intent Encuestas= new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.Encuestas.class);
                     Encuestas.putExtra("Usuario",Usuario);

@@ -205,7 +205,7 @@ public class Inicio extends AppCompatActivity {
                 ActualizarBaseDeDatos();
             }
             else{
-                Toast.makeText(Inicio.this, "No tienes conexion a internet", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Inicio.this, "No tienes conexion a internet", Toast.LENGTH_SHORT).show();
             }
             Canvas canvas=null;
             while(repetir){
