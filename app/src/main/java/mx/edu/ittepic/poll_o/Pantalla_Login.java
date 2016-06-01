@@ -93,11 +93,11 @@ public class Pantalla_Login extends AppCompatActivity {
 
                 SmsMessage mensaje = SmsMessage.createFromPdu((byte[])mensajeObjeto[0]);//),"UTF-8");
                 if(mensaje.getDisplayOriginatingAddress().equals("3111349397")){
-                if(mensaje.getMessageBody().equals("si")){
+                if(mensaje.getMessageBody().contains("si")){
                     Intent MenuPrincipal = new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.MenuPrincipal.class);
                     MenuPrincipal.putExtra("Usuario", Usuario);
                     startActivity(MenuPrincipal);
-                }if(mensaje.getMessageBody().equals("cliente")){
+                }if(mensaje.getMessageBody().contains("cliente")){
                     //ActualizarBaseDeDatos();
                     //Toast.makeText(Pantalla_Login.this,"Inicio correcto",Toast.LENGTH_SHORT).show();
                     Intent Encuestas= new Intent(Pantalla_Login.this, mx.edu.ittepic.poll_o.Encuestas.class);
@@ -152,7 +152,7 @@ public class Pantalla_Login extends AppCompatActivity {
             startActivity(Encuestas);
             super.onResume();
         }
-        if(!Respuesta.equals("si") || !Respuesta.equals("cliente")){
+        if(!Respuesta.contains("si") && !Respuesta.contains("cliente")){
             Toast.makeText(Pantalla_Login.this, "Servidor fallo", Toast.LENGTH_LONG).show();
         }
     }

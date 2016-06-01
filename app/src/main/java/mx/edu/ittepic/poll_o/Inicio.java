@@ -34,6 +34,7 @@ public class Inicio extends AppCompatActivity {
     Point tamanoPantalla;
     Bitmap letras, logo,pollito;
     int alfa;
+    int pasosPollito;
     float progreso,tope,aumento;
     Lienzo lienzo;
     /*ACTUALIZAR AUTOMATICAMENTE SI HAY INTERNET*/
@@ -44,7 +45,7 @@ public class Inicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        pasosPollito=0;
         lienzo=new Lienzo(this);
         setContentView(lienzo);
         alfa=0;
@@ -197,7 +198,7 @@ public class Inicio extends AppCompatActivity {
             repetir=true;
             aumentoAlfa=true;
             puntero=ref;
-            sleep=1; //modificar este a 10
+            sleep=10; //modificar este a 10
         }
 
         public void run(){
@@ -209,6 +210,7 @@ public class Inicio extends AppCompatActivity {
             }
             Canvas canvas=null;
             while(repetir){
+                pasosPollito+=10;
                 if(sleep==1000){
                     repetir=false;
                 }
@@ -216,6 +218,23 @@ public class Inicio extends AppCompatActivity {
                 try{
                     try {
                         sleep(sleep);
+                        switch(pasosPollito){
+                            case 0:
+                                pollito = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.pollito1), 100, 100, false);
+                                break;
+                            case 200:
+
+                                pollito = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.pollito2), 100, 100, false);
+                                break;
+                            case 400:
+                                pollito = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.pollito1), 100, 100, false);
+                                break;
+                            case 600:
+                                pollito = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.pollito3), 100, 100, false);
+                                pasosPollito = -200;
+                                break;
+
+                        }
                         if(aumentoAlfa){
                             alfa+=1;
                             progreso+=aumento;
