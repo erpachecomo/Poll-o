@@ -179,7 +179,7 @@ public class Preguntas extends AppCompatActivity {
                     reg = reg + res.getString(2) + "-" + res.getString(3) + "-" + res.getString(4) + "-" + res.getString(0) + "-o-";
                 } while (res.moveToNext());
                 preguntas = reg.split("-o-");
-                //  Toast.makeText(this,reg,Toast.LENGTH_LONG).show();
+                 // Toast.makeText(this,"Respuestas: "+reg,Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "No se encontraron resultados", Toast.LENGTH_LONG).show();
             }

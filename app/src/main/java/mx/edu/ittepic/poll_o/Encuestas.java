@@ -144,7 +144,7 @@ public class Encuestas extends AppCompatActivity {
                     reg = reg +"("+res.getString(1) + ",'" + res.getString(2)+"')-o-";
                 } while (res.moveToNext());
                 respuestas = reg.split("-o-");
-                //Toast.makeText(this,reg,Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Res: "+reg,Toast.LENGTH_LONG).show();
 
 
 

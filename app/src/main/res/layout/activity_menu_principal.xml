@@ -55,4 +55,13 @@
         android:layout_below="@+id/acerca_de"
         android:layout_alignLeft="@+id/acerca_de"
         android:layout_alignStart="@+id/acerca_de" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/crearTxt"
+        android:background="@drawable/realizar_encuesta_peque"
+        android:layout_below="@+id/salir"
+        android:layout_alignLeft="@+id/salir"
+        android:layout_alignStart="@+id/salir" />
 </RelativeLayout>
