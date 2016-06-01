@@ -13,7 +13,7 @@ public class MenuEncuesta extends AppCompatActivity {
     String encuesta_a_Realizar;
     TextView Encuesta;
     Button Realizar_encuesta,Graficar,subirServer;
-
+    int tipo_usuario;
 
 
     @Override
@@ -21,11 +21,16 @@ public class MenuEncuesta extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_encuesta);
         encuesta_a_Realizar=getIntent().getStringExtra("seleccion");
-
+        tipo_usuario=Integer.parseInt(getIntent().getStringExtra("tipo"));
         Encuesta=(TextView)findViewById(R.id.Encuesta_a_Realizar);
         Realizar_encuesta= (Button)findViewById(R.id.RealizarEncuesta);
         Graficar=(Button)findViewById(R.id.Graficar_Resultados);
-
+        if(tipo_usuario==1){
+            Realizar_encuesta.setVisibility(View.INVISIBLE);
+        }
+        else{
+            Realizar_encuesta.setVisibility(View.VISIBLE);
+        }
 
         Encuesta.setText(encuesta_a_Realizar);
 

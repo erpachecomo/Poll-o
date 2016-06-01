@@ -32,6 +32,7 @@ public class Encuestas extends AppCompatActivity {
     String Usuario_Logeado;
     String[] respuestas;
     String reg="";
+    VerificarConexionWIFI verificadorConexion;
     //ConexionBD bd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +40,24 @@ public class Encuestas extends AppCompatActivity {
         setContentView(R.layout.activity_encuestas);
         encuestasdisponibles=(ListView)findViewById(R.id.encuestas_disponibles);
         btnSubirServer=(Button) findViewById(R.id.subirServer);
+        verificadorConexion=new VerificarConexionWIFI(this);
         encuesta_seleccionada="";
         conexion=new ConexionBD(this,"Poll-oB2",null,1);
         //bd=new ConexionBD(this,"Poll-oB2",null,1);
         tipo_usuario=Integer.parseInt(getIntent().getStringExtra("Tipo"));
         Usuario_Logeado=getIntent().getStringExtra("Usuario");
-        ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
+
         //Toast.makeText(Encuestas.this, ""+itemsEncuesta.size(), Toast.LENGTH_SHORT).show();
         consultaRespuestas();
-
+        ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
         final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
         encuestasdisponibles.setAdapter(Adapter);
-
+        if(tipo_usuario==1){
+            btnSubirServer.setVisibility(View.INVISIBLE);
+        }
+        else{
+            btnSubirServer.setVisibility(View.VISIBLE);
+        }
         btnSubirServer.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -87,6 +94,7 @@ public class Encuestas extends AppCompatActivity {
 
                 Intent PantallaMenuEncuesta = new Intent(Encuestas.this, MenuEncuesta.class);
                 PantallaMenuEncuesta.putExtra("seleccion",encuesta_seleccionada);
+                PantallaMenuEncuesta.putExtra("tipo",tipo_usuario+"");
                 startActivity(PantallaMenuEncuesta);
 
             }
@@ -98,6 +106,13 @@ public class Encuestas extends AppCompatActivity {
         Toast.makeText(Encuestas.this, lables.size()+" ", Toast.LENGTH_SHORT).show();
         return lables;
     }
+    @Override protected void onStart() {
+        super.onStart();
+        ///Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+        ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
+        final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
+        encuestasdisponibles.setAdapter(Adapter);
+    }
     public boolean onCreateOptionsMenu(Menu m){
         //cuando se crea el menu contextual
         this.getMenuInflater().inflate(R.menu.menu_login, m);
@@ -107,6 +122,9 @@ public class Encuestas extends AppCompatActivity {
         //se ejecuta cuanso se toca on item del menu conceptual
         switch (mi.getItemId()){
             case R.id.actualiza:
+                ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
+                final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
+                encuestasdisponibles.setAdapter(Adapter);
 
                 break;
 
@@ -194,6 +212,39 @@ public class Encuestas extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, lables);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         encuestasdisponibles.setAdapter(dataAdapter);
+    }
+    protected void onDestroy() {
+        super.onDestroy();
+        //Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+        if (verificadorConexion.estaConectado() && tipo_usuario==1) {
+            //CODIGO LOGEARTE CON INTERNET
+            Cerrar_Sesion(Usuario_Logeado);
+
+        } else {
+            //AQUI DEBE IR EL CODIGO PARA MANDAR UN MJS AL SERVIDOR SI NO HAY INTERNET
+        }
+    }
+    private void Cerrar_Sesion(String usuario) {
+        try {
+            ConexionWeb web = new ConexionWeb(Encuestas.this,0);
+            web.agregarVariables("operacion", "logout");
+            web.agregarVariables("celular",usuario);
+            URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
+            web.execute(url);
+           // Toast.makeText(this, "cerrar sesion", Toast.LENGTH_SHORT).show();
+
+        }catch (MalformedURLException e) {
+            new AlertDialog.Builder(Encuestas.this).setMessage
+                    (e.getMessage()).setTitle("Error").show();
+
+        }
+    }
+    public void sesion_cerrada(String Respuesta) {
+        if(Respuesta.contains("si")){
+            Toast.makeText(Encuestas.this, "Sesion cerrada", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(Encuestas.this, "no se pudo", Toast.LENGTH_LONG).show();
+        }
     }
 
 }
