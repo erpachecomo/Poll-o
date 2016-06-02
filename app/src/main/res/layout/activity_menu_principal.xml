@@ -65,7 +65,8 @@
                 android:onClick="Cambiar_Acerca"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_horizontal" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -76,7 +77,8 @@
                 android:onClick="Cambiar_Salir"
                 android:layout_below="@+id/Botton_actualizar"
                 android:layout_alignLeft="@+id/acerca_de"
-                android:layout_alignStart="@+id/acerca_de" />
+                android:layout_alignStart="@+id/acerca_de"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </ScrollView>
 

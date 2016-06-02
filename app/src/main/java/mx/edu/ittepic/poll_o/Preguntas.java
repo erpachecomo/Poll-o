@@ -65,8 +65,8 @@ public class Preguntas extends AppCompatActivity {
                 if(con<preguntas.length) {
                     Log.e("layun", layun + "-");
                     try{
-                    //layun.removeViews(2, nOpciones);
-                    layun.removeAllViewsInLayout();
+                        //layun.removeViews(2, nOpciones);
+                        layun.removeAllViewsInLayout();
                     }catch(NullPointerException e){}
                     cargarPreguntas(con);
                 }
@@ -135,7 +135,7 @@ public class Preguntas extends AppCompatActivity {
                 nOpciones =1;
                 txtRespuesta = new EditText(this);
                 txtRespuesta.setText("Sin comentarios");
-                layun.addView(txtRespuesta,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+                layun.addView(txtRespuesta, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
                 tipoRespuesta = "abierta";
 
                 break;
@@ -151,6 +151,7 @@ public class Preguntas extends AppCompatActivity {
                     rg.addView(opcion[i]);
                 }
                 nOpciones = 1;
+                opcion[0].setChecked(true);
                 layun.addView(rg);
                 tipoRespuesta = "opcion";
                 break;
@@ -164,6 +165,7 @@ public class Preguntas extends AppCompatActivity {
                     layun.addView(seleccion[i]);
                     tipoRespuesta = "seleccion";
                 }
+                seleccion[0].setChecked(true);
                 break;
         }
     }
@@ -185,7 +187,7 @@ public class Preguntas extends AppCompatActivity {
                     reg = reg + res.getString(2) + "-" + res.getString(3) + "-" + res.getString(4) + "-" + res.getString(0) + "-o-";
                 } while (res.moveToNext());
                 preguntas = reg.split("-o-");
-                 // Toast.makeText(this,"Respuestas: "+reg,Toast.LENGTH_LONG).show();
+                // Toast.makeText(this,"Respuestas: "+reg,Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "No se encontraron resultados", Toast.LENGTH_LONG).show();
             }
