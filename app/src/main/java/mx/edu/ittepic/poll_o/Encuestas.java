@@ -50,6 +50,9 @@ public class Encuestas extends AppCompatActivity {
         //Toast.makeText(Encuestas.this, ""+itemsEncuesta.size(), Toast.LENGTH_SHORT).show();
         consultaRespuestas();
         ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
+        while(itemsEncuesta.size()<=0){
+            itemsEncuesta=obtenerItems();
+        }
         final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
         encuestasdisponibles.setAdapter(Adapter);
         if(tipo_usuario==1){
@@ -103,13 +106,16 @@ public class Encuestas extends AppCompatActivity {
     };
     private ArrayList<Encuesta_detalle> obtenerItems() {
         ArrayList<Encuesta_detalle> lables=conexion.obtenerEnc();
-        Toast.makeText(Encuestas.this, lables.size()+" ", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Encuestas.this, lables.size()+" ", Toast.LENGTH_SHORT).show();
         return lables;
     }
     @Override protected void onStart() {
         super.onStart();
         ///Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
         ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
+        while(itemsEncuesta.size()<=0){
+            itemsEncuesta=obtenerItems();
+        }
         final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
         encuestasdisponibles.setAdapter(Adapter);
     }
@@ -123,6 +129,9 @@ public class Encuestas extends AppCompatActivity {
         switch (mi.getItemId()){
             case R.id.actualiza:
                 ArrayList <Encuesta_detalle> itemsEncuesta=obtenerItems();
+                while(itemsEncuesta.size()<=0){
+                    itemsEncuesta=obtenerItems();
+                }
                 final ItemCompraAdapter Adapter= new ItemCompraAdapter(this,itemsEncuesta);
                 encuestasdisponibles.setAdapter(Adapter);
 
@@ -144,7 +153,7 @@ public class Encuestas extends AppCompatActivity {
                     reg = reg +"("+res.getString(1) + ",'" + res.getString(2)+"')-o-";
                 } while (res.moveToNext());
                 respuestas = reg.split("-o-");
-                Toast.makeText(this,"Res: "+reg,Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,"Res: "+reg,Toast.LENGTH_LONG).show();
 
 
 
@@ -160,13 +169,13 @@ public class Encuestas extends AppCompatActivity {
         }
     }
     public  void mostrarREspuesta(String res){
-        Toast.makeText(Encuestas.this,res, Toast.LENGTH_LONG).show();
+        //Toast.makeText(Encuestas.this,res, Toast.LENGTH_LONG).show();
             if (res.contains("si")) {
                 Toast.makeText(Encuestas.this, "Almacenado en servidor exitosamente", Toast.LENGTH_LONG).show();
                 eliminarRespuestas();
             }
             if (res.contains("no")) {
-                //Toast.makeText(Encuestas.this, "No se pudo almacenar en servidor", Toast.LENGTH_LONG).show();
+                Toast.makeText(Encuestas.this, "No se pudo almacenar en servidor", Toast.LENGTH_LONG).show();
             }
     }
     public void eliminarRespuestas() {
@@ -185,7 +194,7 @@ public class Encuestas extends AppCompatActivity {
 
     public void mostrar(String resultado){
 
-        Toast.makeText(this,resultado,Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,resultado,Toast.LENGTH_LONG).show();
 
         if(resultado.startsWith("Error_404_1")){
             resultado="Hosting no encontrado";
@@ -243,7 +252,7 @@ public class Encuestas extends AppCompatActivity {
         if(Respuesta.contains("si")){
             Toast.makeText(Encuestas.this, "Sesion cerrada", Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(Encuestas.this, "no se pudo", Toast.LENGTH_LONG).show();
+            Toast.makeText(Encuestas.this, "No se pudo cerrar sesión. Por favor intentalo de nuevo", Toast.LENGTH_LONG).show();
         }
     }
 

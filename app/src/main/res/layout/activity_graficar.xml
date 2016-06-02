@@ -35,7 +35,9 @@
         android:layout_height="wrap_content"
         android:text="Graficar"
         android:id="@+id/Graficar_botton"
-        android:onClick="Grafica" />
+        android:onClick="Grafica"
+        android:background="#0097A7"
+        android:textColor="#ffffff" />
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"

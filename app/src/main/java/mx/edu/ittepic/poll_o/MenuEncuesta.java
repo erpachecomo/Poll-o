@@ -6,13 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MenuEncuesta extends AppCompatActivity {
     String encuesta_a_Realizar;
     TextView Encuesta;
-    Button Realizar_encuesta,Graficar,subirServer;
+    ImageButton Realizar_encuesta,Graficar,subirServer;
     int tipo_usuario;
 
 
@@ -23,8 +24,8 @@ public class MenuEncuesta extends AppCompatActivity {
         encuesta_a_Realizar=getIntent().getStringExtra("seleccion");
         tipo_usuario=Integer.parseInt(getIntent().getStringExtra("tipo"));
         Encuesta=(TextView)findViewById(R.id.Encuesta_a_Realizar);
-        Realizar_encuesta= (Button)findViewById(R.id.RealizarEncuesta);
-        Graficar=(Button)findViewById(R.id.Graficar_Resultados);
+        Realizar_encuesta= (ImageButton)findViewById(R.id.RealizarEncuesta);
+        Graficar=(ImageButton)findViewById(R.id.Graficar_Resultados);
         if(tipo_usuario==1){
             Realizar_encuesta.setVisibility(View.INVISIBLE);
         }

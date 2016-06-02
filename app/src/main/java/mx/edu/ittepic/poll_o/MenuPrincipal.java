@@ -61,7 +61,7 @@ public class MenuPrincipal extends AppCompatActivity {
                         }
                         //File directorioAplicacion = getExternalFilesDir("TPDM");
                         //Con variante de vector de files
-                        File datosArchivo = new File(carpeta.getAbsolutePath(), "encuestas.txt");
+                        File datosArchivo = new File(carpeta.getAbsolutePath(), "encuestas.csv");
                         OutputStreamWriter archivo = new OutputStreamWriter(new FileOutputStream(datosArchivo));
                         archivo.write(consultaBD());
                         archivo.close();
@@ -252,7 +252,7 @@ public class MenuPrincipal extends AppCompatActivity {
             web.agregarVariables("celular",usuario);
             URL url = new URL("http://poll-o.ueuo.com/basededatos.php");
             web.execute(url);
-            Toast.makeText(this, "cerrar sesion", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "cerrar sesion", Toast.LENGTH_SHORT).show();
 
         }catch (MalformedURLException e) {
             new AlertDialog.Builder(MenuPrincipal.this).setMessage

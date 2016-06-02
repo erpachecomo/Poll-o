@@ -1,68 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context="mx.edu.ittepic.poll_o.MenuPrincipal"
-    android:background="@drawable/background">
+    android:orientation="vertical">
 
-    <ImageButton
-        android:layout_width="wrap_content"
+    <ImageView
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/salir"
-        android:src="@drawable/salir"
-        android:background="#00ffffff"
-        android:onClick="Cambiar_Salir"
-        android:layout_below="@+id/Botton_actualizar"
-        android:layout_alignLeft="@+id/acerca_de"
-        android:layout_alignStart="@+id/acerca_de" />
+        android:id="@+id/imageView"
+        android:src="@drawable/cabeceramp" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/realizar_encuesta"
-        android:src="@drawable/realizar_encuesta"
-        android:background="#00ffffff"
-        android:onClick="Cambiar_Encuestas"
-        android:layout_above="@+id/acerca_de"
-        android:layout_alignLeft="@+id/acerca_de"
-        android:layout_alignStart="@+id/acerca_de" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView" >
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/acerca_de"
-        android:src="@drawable/acerca_de"
-        android:background="#00b36a6a"
-        android:onClick="Cambiar_Acerca"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="176dp"
-        android:layout_marginEnd="176dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Botton_actualizar"
-        android:src="@drawable/refresh"
-        android:background="#00ffffff"
-        android:onClick="Actualizar"
-        android:layout_below="@+id/acerca_de"
-        android:layout_alignLeft="@+id/acerca_de"
-        android:layout_alignStart="@+id/acerca_de" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/realizar_encuesta"
+                android:src="@drawable/realizar_encuesta"
+                android:background="#00ffffff"
+                android:onClick="Cambiar_Encuestas"
+                android:layout_above="@+id/acerca_de"
+                android:layout_alignLeft="@+id/acerca_de"
+                android:layout_alignStart="@+id/acerca_de"
+                android:layout_gravity="center_horizontal" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/crearTxt"
-        android:background="@drawable/realizar_encuesta_peque"
-        android:layout_below="@+id/salir"
-        android:layout_alignLeft="@+id/salir"
-        android:layout_alignStart="@+id/salir" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Botton_actualizar"
+                android:src="@drawable/refresh"
+                android:background="#00ffffff"
+                android:onClick="Actualizar"
+                android:layout_below="@+id/acerca_de"
+                android:layout_alignLeft="@+id/acerca_de"
+                android:layout_alignStart="@+id/acerca_de"
+                android:layout_gravity="center_horizontal" />
 
-</RelativeLayout>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/crearTxt"
+                android:background="@drawable/exportar"
+                android:layout_below="@+id/salir"
+                android:layout_alignLeft="@+id/salir"
+                android:layout_alignStart="@+id/salir"
+                android:layout_gravity="center_horizontal" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/acerca_de"
+                android:src="@drawable/acerca_de"
+                android:background="#00b36a6a"
+                android:onClick="Cambiar_Acerca"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/salir"
+                android:src="@drawable/salir"
+                android:background="#00ffffff"
+                android:onClick="Cambiar_Salir"
+                android:layout_below="@+id/Botton_actualizar"
+                android:layout_alignLeft="@+id/acerca_de"
+                android:layout_alignStart="@+id/acerca_de" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.SweepGradient;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -62,7 +63,11 @@ public class Preguntas extends AppCompatActivity {
                 guardarRespuestas();
 
                 if(con<preguntas.length) {
-                    layun.removeViews(2, nOpciones);
+                    Log.e("layun", layun + "-");
+                    try{
+                    //layun.removeViews(2, nOpciones);
+                    layun.removeAllViewsInLayout();
+                    }catch(NullPointerException e){}
                     cargarPreguntas(con);
                 }
                 else{
@@ -123,13 +128,14 @@ public class Preguntas extends AppCompatActivity {
     }
 
     public  void  cargarOpciones(String tipo,String opc){
-
+        Log.e("tipo",tipo);
         switch(tipo){
             case "abierta":
 
                 nOpciones =1;
                 txtRespuesta = new EditText(this);
-                layun.addView(txtRespuesta);
+                txtRespuesta.setText("Sin comentarios");
+                layun.addView(txtRespuesta,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
                 tipoRespuesta = "abierta";
 
                 break;

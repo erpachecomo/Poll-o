@@ -32,7 +32,7 @@ import java.net.URL;
 public class Inicio extends AppCompatActivity {
 
     Point tamanoPantalla;
-    Bitmap letras, logo,pollito;
+    Bitmap letras, logo,pollito,background;
     int alfa;
     int pasosPollito;
     float progreso,tope,aumento;
@@ -61,6 +61,7 @@ public class Inicio extends AppCompatActivity {
         aumento=tope/400;
         progreso=0;
         pollito = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.pollito1),100,100,false);
+        background = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.background),tamanoPantalla.x,tamanoPantalla.y,false);
         logo = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.logosinguino),tamanoPantalla.x / 3,tamanoPantalla.x / 3,false);
         Bitmap letraspollo=BitmapFactory.decodeResource(getResources(), R.drawable.letraspollo);
         letras = Bitmap.createScaledBitmap(letraspollo,letraspollo.getWidth() /3,letraspollo.getHeight()/3,false);
@@ -150,13 +151,15 @@ public class Inicio extends AppCompatActivity {
         public void onDraw(Canvas c) {
             try{
                 Paint p = new Paint();
+
                 c.drawColor(Color.WHITE);
+                c.drawBitmap(background, 0, 0, p);
                 p.setAlpha(alfa);
                 c.drawBitmap(letras, tamanoPantalla.x / 2 - letras.getWidth() / 2, tamanoPantalla.y / 5, p);
                 p.setAlpha(255);
                 c.drawBitmap(logo, tamanoPantalla.x / 2 - logo.getWidth() / 2, tamanoPantalla.y / 4 + letras.getHeight(), p);
                 Paint p2 = new Paint();
-                p2.setColor(Color.rgb(121, 179, 225));
+                p2.setColor(Color.rgb(0,151,167));
                 p2.setStyle(Paint.Style.FILL);
                 c.drawCircle(tamanoPantalla.x / 6 + 50, tamanoPantalla.y / 4 + letras.getHeight() + logo.getHeight() + 20 + 50, 50, p2);
 
@@ -198,7 +201,7 @@ public class Inicio extends AppCompatActivity {
             repetir=true;
             aumentoAlfa=true;
             puntero=ref;
-            sleep=10; //modificar este a 10
+            sleep=1; //modificar este a 10
         }
 
         public void run(){

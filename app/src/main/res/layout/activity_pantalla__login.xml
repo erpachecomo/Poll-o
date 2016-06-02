@@ -57,5 +57,7 @@
         android:layout_height="wrap_content"
         android:text="Iniciar Sesión"
         android:id="@+id/Boton_in_sesion"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="#0097a7"
+        android:textColor="#ffffff" />
 </LinearLayout>
